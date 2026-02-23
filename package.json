@@ -11,9 +11,14 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.0",
+    "aos": "^2.3.4",
+    "lucide-react": "^0.575.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-fast-marquee": "^1.6.5",
+    "react-hook-form": "^7.71.2",
     "react-router": "^7.13.0",
+    "sweetalert2": "^11.26.20",
     "tailwindcss": "^4.2.0"
   },
   "devDependencies": {

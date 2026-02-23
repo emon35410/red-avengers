@@ -1,0 +1,678 @@
+{
+    "stats": [
+        {
+            "id": 1,
+            "number": "70+",
+            "label": "Network Partners",
+            "icon": "🤝"
+        },
+        {
+            "id": 2,
+            "number": "250+",
+            "label": "Partner Hospitals",
+            "icon": "🏥"
+        },
+        {
+            "id": 3,
+            "number": "120+",
+            "label": "Blood Centers",
+            "icon": "🩸"
+        },
+        {
+            "id": 4,
+            "number": "45+",
+            "label": "Islamic Alliances",
+            "icon": "🌙"
+        }
+    ],
+    "partners": [
+        {
+            "id": 1,
+            "name": "Quantum Foundation",
+            "type": "Social NGO",
+            "location": "Dhaka",
+            "icon": "🧘",
+            "color": "from-orange-500 to-amber-600",
+            "desc": "Largest modern blood lab in Bangladesh."
+        },
+        {
+            "id": 2,
+            "name": "Al-Markazulul Islami",
+            "type": "Islamic NGO",
+            "location": "Dhaka",
+            "icon": "🌙",
+            "color": "from-emerald-600 to-teal-700",
+            "desc": "Leading Islamic humanitarian service provider."
+        },
+        {
+            "id": 3,
+            "name": "As-Sunnah Foundation",
+            "type": "Islamic NGO",
+            "location": "National",
+            "icon": "☀️",
+            "color": "from-green-600 to-emerald-700",
+            "desc": "Active in humanitarian and medical relief."
+        },
+        {
+            "id": 4,
+            "name": "Sandhani (All Units)",
+            "type": "Medical NGO",
+            "location": "National",
+            "icon": "🩸",
+            "color": "from-red-600 to-rose-700",
+            "desc": "The pioneer of voluntary blood donation."
+        },
+        {
+            "id": 5,
+            "name": "Badhan (All Units)",
+            "type": "Student NGO",
+            "location": "National",
+            "icon": "🤝",
+            "color": "from-red-500 to-pink-600",
+            "desc": "Largest student-led blood donor network."
+        },
+        {
+            "id": 6,
+            "name": "Red Crescent Society",
+            "type": "International NGO",
+            "location": "National",
+            "icon": "🌙",
+            "color": "from-rose-600 to-red-700",
+            "desc": "Emergency blood support network."
+        },
+        {
+            "id": 7,
+            "name": "Evercare Hospital",
+            "type": "Medical Partner",
+            "location": "Dhaka",
+            "icon": "🏥",
+            "color": "from-blue-600 to-cyan-700",
+            "desc": "Premium medical facilities and blood bank."
+        },
+        {
+            "id": 8,
+            "name": "Square Hospital",
+            "type": "Medical Partner",
+            "location": "Dhaka",
+            "icon": "🏢",
+            "color": "from-slate-700 to-slate-900",
+            "desc": "State-of-the-art blood storage systems."
+        },
+        {
+            "id": 9,
+            "name": "Apollo Imperial",
+            "type": "Medical Partner",
+            "location": "Chittagong",
+            "icon": "🏥",
+            "color": "from-blue-700 to-indigo-800",
+            "desc": "Major blood hub for the port city."
+        },
+        {
+            "id": 10,
+            "name": "Ahsania Mission",
+            "type": "Islamic NGO",
+            "location": "Dhaka",
+            "icon": "🏗️",
+            "color": "from-teal-600 to-cyan-700",
+            "desc": "Cancer and blood support pioneers."
+        },
+        {
+            "id": 11,
+            "name": "BSMMU (PG Hospital)",
+            "type": "Govt Partner",
+            "location": "Dhaka",
+            "icon": "🏛️",
+            "color": "from-slate-600 to-slate-700",
+            "desc": "National medical research and blood hub."
+        },
+        {
+            "id": 12,
+            "name": "Labaid Specialized",
+            "type": "Medical Partner",
+            "location": "Dhaka",
+            "icon": "🔬",
+            "color": "from-indigo-500 to-blue-600",
+            "desc": "Specialized in hematology and heart care."
+        },
+        {
+            "id": 13,
+            "name": "United Hospital",
+            "type": "Medical Partner",
+            "location": "Dhaka",
+            "icon": "🏥",
+            "color": "from-sky-500 to-blue-600",
+            "desc": "Emergency blood and trauma care."
+        },
+        {
+            "id": 14,
+            "name": "Islamic Bank Hospital",
+            "type": "Islamic Partner",
+            "location": "National",
+            "icon": "🏢",
+            "color": "from-emerald-500 to-green-600",
+            "desc": "Affordable blood and lab services."
+        },
+        {
+            "id": 15,
+            "name": "Enam Medical College",
+            "type": "Medical Partner",
+            "location": "Savar",
+            "icon": "🏫",
+            "color": "from-rose-600 to-red-800",
+            "desc": "Critical hub for Savar and nearby areas."
+        },
+        {
+            "id": 16,
+            "name": "Khulna Medical (KMC)",
+            "type": "Govt Partner",
+            "location": "Khulna",
+            "icon": "🏛️",
+            "color": "from-slate-500 to-slate-700",
+            "desc": "Primary medical node for Khulna division."
+        },
+        {
+            "id": 17,
+            "name": "Rajshahi Medical (RMC)",
+            "type": "Govt Partner",
+            "location": "Rajshahi",
+            "icon": "🏛️",
+            "color": "from-blue-500 to-slate-700",
+            "desc": "Central blood bank for Rajshahi region."
+        },
+        {
+            "id": 18,
+            "name": "Sylhet MAG Osmani",
+            "type": "Govt Partner",
+            "location": "Sylhet",
+            "icon": "🏛️",
+            "color": "from-emerald-600 to-teal-800",
+            "desc": "Major blood supply for the tea capital."
+        },
+        {
+            "id": 19,
+            "name": "Z.H. Sikder Medical",
+            "type": "Medical Partner",
+            "location": "Dhaka",
+            "icon": "🏢",
+            "color": "from-amber-600 to-red-700",
+            "desc": "Leading specialized medical service."
+        },
+        {
+            "id": 20,
+            "name": "Birdem General",
+            "type": "Medical Partner",
+            "location": "Dhaka",
+            "icon": "🏥",
+            "color": "from-cyan-600 to-blue-700",
+            "desc": "World-class diabetes and blood center."
+        },
+        {
+            "id": 21,
+            "name": "Ibn Sina Hospital",
+            "type": "Medical Partner",
+            "location": "National",
+            "icon": "🏥",
+            "color": "from-emerald-600 to-green-800",
+            "desc": "Trusted name in Islamic healthcare."
+        },
+        {
+            "id": 22,
+            "name": "Bloodman BD",
+            "type": "Digital Partner",
+            "location": "Digital",
+            "icon": "📱",
+            "color": "from-rose-500 to-red-600",
+            "desc": "Digital blood donor matching platform."
+        },
+        {
+            "id": 23,
+            "name": "Police Blood Bank",
+            "type": "Govt Partner",
+            "location": "Dhaka",
+            "icon": "👮",
+            "color": "from-blue-800 to-slate-900",
+            "desc": "Dedicated service by Bangladesh Police."
+        },
+        {
+            "id": 24,
+            "name": "Armed Forces Medical",
+            "type": "Govt Partner",
+            "location": "Dhaka",
+            "icon": "🎖️",
+            "color": "from-green-700 to-slate-800",
+            "desc": "Army-led specialized blood center."
+        },
+        {
+            "id": 25,
+            "name": "Eradication of Thalassemia",
+            "type": "Health NGO",
+            "location": "Dhaka",
+            "icon": "🧬",
+            "color": "from-purple-500 to-indigo-600",
+            "desc": "Fighting blood disorders across BD."
+        },
+        {
+            "id": 26,
+            "name": "Rotary Club of Dhaka",
+            "type": "Social Partner",
+            "location": "Dhaka",
+            "icon": "⚙️",
+            "color": "from-amber-500 to-orange-600",
+            "desc": "Global community blood initiatives."
+        },
+        {
+            "id": 27,
+            "name": "Lions Club Int.",
+            "type": "Social Partner",
+            "location": "National",
+            "icon": "🦁",
+            "color": "from-blue-600 to-yellow-600",
+            "desc": "Vision and blood support programs."
+        },
+        {
+            "id": 28,
+            "name": "Care Bangladesh",
+            "type": "Int NGO",
+            "location": "National",
+            "icon": "🏠",
+            "color": "from-orange-600 to-red-700",
+            "desc": "Healthcare and relief across villages."
+        },
+        {
+            "id": 29,
+            "name": "Save the Children",
+            "type": "Int NGO",
+            "location": "National",
+            "icon": "👶",
+            "color": "from-red-500 to-rose-600",
+            "desc": "Children's health and blood safety."
+        },
+        {
+            "id": 30,
+            "name": "Brac Health",
+            "type": "Social Partner",
+            "location": "National",
+            "icon": "🌳",
+            "color": "from-pink-600 to-rose-700",
+            "desc": "Rural healthcare and blood awareness."
+        },
+        {
+            "id": 31,
+            "name": "Popular Diagnostic",
+            "type": "Medical Partner",
+            "location": "National",
+            "icon": "🔬",
+            "color": "from-blue-500 to-indigo-600",
+            "desc": "Largest diagnostic network in BD."
+        },
+        {
+            "id": 32,
+            "name": "Dhaka Medical (DMC)",
+            "type": "Govt Partner",
+            "location": "Dhaka",
+            "icon": "🏛️",
+            "color": "from-red-700 to-rose-900",
+            "desc": "The ultimate hub for blood emergencies."
+        },
+        {
+            "id": 33,
+            "name": "Holy Family Red Crescent",
+            "type": "Medical Partner",
+            "location": "Dhaka",
+            "icon": "🌙",
+            "color": "from-red-600 to-pink-700",
+            "desc": "Historical blood and medical service."
+        },
+        {
+            "id": 34,
+            "name": "Sir Salimullah Medical",
+            "type": "Govt Partner",
+            "location": "Dhaka",
+            "icon": "🏛️",
+            "color": "from-slate-600 to-blue-800",
+            "desc": "Mitford's central blood hub."
+        },
+        {
+            "id": 35,
+            "name": "Anwer Khan Modern",
+            "type": "Medical Partner",
+            "location": "Dhaka",
+            "icon": "🏢",
+            "color": "from-teal-500 to-blue-600",
+            "desc": "Modern lab and storage services."
+        },
+        {
+            "id": 36,
+            "name": "Barisal Sher-e-Bangla",
+            "type": "Govt Partner",
+            "location": "Barisal",
+            "icon": "🏛️",
+            "color": "from-indigo-600 to-slate-800",
+            "desc": "Main hub for the Southern division."
+        },
+        {
+            "id": 37,
+            "name": "Rangpur Medical",
+            "type": "Govt Partner",
+            "location": "Rangpur",
+            "icon": "🏛️",
+            "color": "from-amber-700 to-orange-800",
+            "desc": "Serving the Northern community."
+        },
+        {
+            "id": 38,
+            "name": "Mymensingh Medical",
+            "type": "Govt Partner",
+            "location": "Mymensingh",
+            "icon": "🏛️",
+            "color": "from-cyan-700 to-slate-800",
+            "desc": "Central node for Mymensingh area."
+        },
+        {
+            "id": 39,
+            "name": "Green Life Hospital",
+            "type": "Medical Partner",
+            "location": "Dhaka",
+            "icon": "🌱",
+            "color": "from-green-500 to-teal-600",
+            "desc": "Leading private medical services."
+        },
+        {
+            "id": 40,
+            "name": "Central Hospital",
+            "type": "Medical Partner",
+            "location": "Dhaka",
+            "icon": "🏢",
+            "color": "from-blue-600 to-indigo-700",
+            "desc": "24/7 blood and trauma services."
+        },
+        {
+            "id": 41,
+            "name": "Al-Haramain Hospital",
+            "type": "Islamic Partner",
+            "location": "Sylhet",
+            "icon": "🕋",
+            "color": "from-emerald-700 to-slate-800",
+            "desc": "Advanced healthcare with Islamic values."
+        },
+        {
+            "id": 42,
+            "name": "Sahic Hospital",
+            "type": "Health NGO",
+            "location": "Dhaka",
+            "icon": "👂",
+            "color": "from-sky-500 to-blue-600",
+            "desc": "Specialized health and donor services."
+        },
+        {
+            "id": 43,
+            "name": "Uttara Adhunik Medical",
+            "type": "Medical Partner",
+            "location": "Dhaka",
+            "icon": "🏢",
+            "color": "from-rose-500 to-red-600",
+            "desc": "Modern medical hub for Uttara region."
+        },
+        {
+            "id": 44,
+            "name": "Aichi Medical",
+            "type": "Medical Partner",
+            "location": "Dhaka",
+            "icon": "🏥",
+            "color": "from-teal-500 to-cyan-600",
+            "desc": "Specialized lab and donor center."
+        },
+        {
+            "id": 45,
+            "name": "Shahabuddin Medical",
+            "type": "Medical Partner",
+            "location": "Dhaka",
+            "icon": "🏢",
+            "color": "from-indigo-500 to-slate-700",
+            "desc": "Emergency blood services in Gulshan."
+        },
+        {
+            "id": 46,
+            "name": "Delta Hospital",
+            "type": "Medical Partner",
+            "location": "Dhaka",
+            "icon": "🏢",
+            "color": "from-orange-500 to-red-600",
+            "desc": "Leading oncology and blood center."
+        },
+        {
+            "id": 47,
+            "name": "BIRDEM-2",
+            "type": "Medical Partner",
+            "location": "Dhaka",
+            "icon": "🏥",
+            "color": "from-cyan-500 to-blue-600",
+            "desc": "Specialized mother and child blood care."
+        },
+        {
+            "id": 48,
+            "name": "Bangladesh Thalassemia Hospital",
+            "type": "Health NGO",
+            "location": "Dhaka",
+            "icon": "🩸",
+            "color": "from-rose-500 to-red-700",
+            "desc": "Dedicated support for thalassemia warriors."
+        },
+        {
+            "id": 49,
+            "name": "Fatema Foundation",
+            "type": "Islamic NGO",
+            "location": "National",
+            "icon": "🕋",
+            "color": "from-green-600 to-teal-700",
+            "desc": "Free blood services for orphans and the poor."
+        },
+        {
+            "id": 50,
+            "name": "Anjuman Mufidul Islam",
+            "type": "Islamic NGO",
+            "location": "Dhaka",
+            "icon": "🌙",
+            "color": "from-emerald-700 to-slate-800",
+            "desc": "Historical humanitarian organization in BD."
+        },
+        {
+            "id": 51,
+            "name": "Mastul Foundation",
+            "type": "Social NGO",
+            "location": "Dhaka",
+            "icon": "🤝",
+            "color": "from-amber-500 to-orange-600",
+            "desc": "Empowering youth through blood donation drives."
+        },
+        {
+            "id": 52,
+            "name": "Sahic ENT Hospital",
+            "type": "Medical Partner",
+            "location": "Dhaka",
+            "icon": "🏥",
+            "color": "from-sky-500 to-blue-600",
+            "desc": "Specialized surgery and blood support."
+        },
+        {
+            "id": 53,
+            "name": "COMEC Medical",
+            "type": "Medical Partner",
+            "location": "Comilla",
+            "icon": "🏛️",
+            "color": "from-blue-700 to-indigo-800",
+            "desc": "Major blood hub for Comilla region."
+        },
+        {
+            "id": 54,
+            "name": "Noakhali General Hospital",
+            "type": "Govt Partner",
+            "location": "Noakhali",
+            "icon": "🏛️",
+            "color": "from-slate-600 to-slate-800",
+            "desc": "Primary blood source for Greater Noakhali."
+        },
+        {
+            "id": 55,
+            "name": "Sajida Foundation",
+            "type": "Health NGO",
+            "location": "National",
+            "icon": "🏢",
+            "color": "from-teal-500 to-green-600",
+            "desc": "Comprehensive health and blood initiatives."
+        },
+        {
+            "id": 56,
+            "name": "Bashundhara Hospital",
+            "type": "Medical Partner",
+            "location": "Dhaka",
+            "icon": "🏥",
+            "color": "from-rose-700 to-red-900",
+            "desc": "High-tech eye and blood surgery support."
+        },
+        {
+            "id": 57,
+            "name": "Japan East West Hospital",
+            "type": "Medical Partner",
+            "location": "Dhaka",
+            "icon": "🇯🇵",
+            "color": "from-red-500 to-rose-600",
+            "desc": "Advanced blood screening technology."
+        },
+        {
+            "id": 58,
+            "name": "National Heart Foundation",
+            "type": "Health NGO",
+            "location": "Dhaka",
+            "icon": "❤️",
+            "color": "from-red-600 to-pink-700",
+            "desc": "Emergency blood for cardiac patients."
+        },
+        {
+            "id": 59,
+            "name": "Ibrahim Cardiac",
+            "type": "Medical Partner",
+            "location": "Dhaka",
+            "icon": "🏥",
+            "color": "from-rose-600 to-red-800",
+            "desc": "Specialized heart and blood services."
+        },
+        {
+            "id": 60,
+            "name": "Ahsanullah Mission Hospital",
+            "type": "Islamic Partner",
+            "location": "Mirpur",
+            "icon": "🌙",
+            "color": "from-teal-600 to-emerald-700",
+            "desc": "Sufi-inspired humanitarian medical care."
+        },
+        {
+            "id": 61,
+            "name": "Dinajpur Medical",
+            "type": "Govt Partner",
+            "location": "Dinajpur",
+            "icon": "🏛️",
+            "color": "from-amber-600 to-orange-700",
+            "desc": "Serving the Northern districts."
+        },
+        {
+            "id": 62,
+            "name": "Cox's Bazar District Hosp.",
+            "type": "Govt Partner",
+            "location": "Cox's Bazar",
+            "icon": "🏖️",
+            "color": "from-cyan-600 to-blue-700",
+            "desc": "Critical hub for tourists and locals."
+        },
+        {
+            "id": 63,
+            "name": "Kishoreganj Syed Nazrul Hosp.",
+            "type": "Govt Partner",
+            "location": "Kishoreganj",
+            "icon": "🏛️",
+            "color": "from-indigo-600 to-blue-800",
+            "desc": "Modern blood storage in Haor region."
+        },
+        {
+            "id": 64,
+            "name": "Jashore General Hospital",
+            "type": "Govt Partner",
+            "location": "Jashore",
+            "icon": "🏛️",
+            "color": "from-emerald-500 to-green-700",
+            "desc": "Primary medical node for Jashore."
+        },
+        {
+            "id": 65,
+            "name": "Bogura Shaheed Ziaur Hosp.",
+            "type": "Govt Partner",
+            "location": "Bogura",
+            "icon": "🏛️",
+            "color": "from-slate-700 to-slate-900",
+            "desc": "Central blood hub for North Bengal."
+        },
+        {
+            "id": 66,
+            "name": "Universal Medical College",
+            "type": "Medical Partner",
+            "location": "Dhaka",
+            "icon": "🏫",
+            "color": "from-rose-500 to-red-600",
+            "desc": "Formerly Ayesha Memorial, trusted service."
+        },
+        {
+            "id": 67,
+            "name": "Lab One Blood Bank",
+            "type": "Blood Bank",
+            "location": "Dhaka",
+            "icon": "🩸",
+            "color": "from-purple-600 to-pink-700",
+            "desc": "Focused on safe blood transfusion."
+        },
+        {
+            "id": 68,
+            "name": "Manush Manusher Jonno",
+            "type": "Social NGO",
+            "location": "National",
+            "icon": "🤝",
+            "color": "from-orange-500 to-amber-600",
+            "desc": "Crowdsourced blood and oxygen support."
+        },
+        {
+            "id": 69,
+            "name": "Relief International",
+            "type": "Int NGO",
+            "location": "National",
+            "icon": "🌐",
+            "color": "from-blue-500 to-sky-600",
+            "desc": "Global standards in local blood drives."
+        },
+        {
+            "id": 70,
+            "name": "Volunteer for Bangladesh",
+            "type": "Youth Partner",
+            "location": "National",
+            "icon": "🙌",
+            "color": "from-yellow-500 to-orange-600",
+            "desc": "JAAGO foundation's youth blood network."
+        },
+        {
+            "id": 71,
+            "name": "Al-Khidmat Foundation",
+            "type": "Islamic NGO",
+            "location": "National",
+            "icon": "🌙",
+            "color": "from-green-700 to-emerald-900",
+            "desc": "Global Islamic humanitarian network in BD."
+        },
+        {
+            "id": 72,
+            "name": "Imperial Hospital Ltd.",
+            "type": "Medical Partner",
+            "location": "Chittagong",
+            "icon": "🏥",
+            "color": "from-blue-700 to-indigo-800",
+            "desc": "World-class blood bank and surgical storage in Ctg."
+        }
+    ]
+}
