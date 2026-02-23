@@ -1,1 +1,32 @@
 @import "tailwindcss";
+
+@theme {
+  /* Customizing colors for better eye comfort */
+  --color-slate-950: #020617;
+  --color-rose-600: #e11d48;
+  
+  /* Adding your Heroic Font */
+  --font-heading: "Montserrat", sans-serif;
+  --font-sans: "Inter", sans-serif;
+}
+
+/* Manually enabling class-based dark mode in v4 */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  html {
+    /* Smooth theme switching to prevent eye-jarring flashes */
+    transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+    font-family: var(--font-sans);
+  }
+
+  body {
+    @apply bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100;
+  }
+}
+
+@layer components {
+  .font-heading {
+    font-family: var(--font-heading);
+  }
+}
