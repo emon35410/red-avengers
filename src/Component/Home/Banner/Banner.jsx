@@ -78,13 +78,13 @@ const Banner = () => {
             ))}
           </div>
           <div data-aos="fade-up" data-aos-delay="600" className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6 w-full sm:w-auto">
-            <Link to="/donateblood" className="group relative w-full sm:w-auto px-5 md:px-6 py-4 md:py-4 bg-rose-600 rounded-xl md:rounded-2xl transition-all duration-300 hover:bg-rose-700 hover:shadow-[0_0_40px_rgba(225,29,72,0.4)] active:scale-95">
+            <Link to="/become-donor" className="group relative w-full sm:w-auto px-5 md:px-6 py-4 md:py-4 bg-rose-600 rounded-xl md:rounded-2xl transition-all duration-300 hover:bg-rose-700 hover:shadow-[0_0_40px_rgba(225,29,72,0.4)] active:scale-95">
               <span className="font-heading font-black text-white tracking-widest text-xs md:text-sm flex items-center justify-center gap-2">
-                ASSEMBLE NOW <span className="transition-transform group-hover:translate-x-2">→</span>
+                Become A Donor <span className="transition-transform group-hover:translate-x-2">→</span>
               </span>
             </Link>
 
-            <Link to="/searchDonor" className="w-full sm:w-auto px-5 md:px-8 py-4 md:py-4 bg-white/5 backdrop-blur-md border border-slate-700 hover:border-slate-400 rounded-xl md:rounded-2xl transition-all duration-300 font-heading font-bold text-slate-300 text-xs md:text-sm tracking-widest">
+            <Link to="/finddonor" className="w-full sm:w-auto px-5 md:px-8 py-4 md:py-4 bg-white/5 backdrop-blur-md border border-slate-700 hover:border-slate-400 rounded-xl md:rounded-2xl transition-all duration-300 font-heading font-bold text-slate-300 text-xs md:text-sm tracking-widest">
               SEARCH DONORS
             </Link>
           </div>
