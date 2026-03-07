@@ -10,7 +10,7 @@ import useAuth from '../../Hooks/useAuth';
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const { signInUser, setLoading } = useAuth();
-    
+
     // Navigation helpers
     const navigate = useNavigate();
     const location = useLocation();
@@ -26,18 +26,21 @@ const Login = () => {
         try {
             setLoading(true);
             await signInUser(data.email, data.password);
-            
+
             toast.success('Welcome Back, Hero!', {
                 style: { background: '#1e293b', color: '#fff' }
             });
+
             
-            navigate(from, { replace: true });
+            setTimeout(() => {
+                navigate(from, { replace: true });
+            }, 100);
+
         } catch (error) {
-            console.error(error);
-            const message = error.code === 'auth/invalid-credential' 
-                ? "Secret code or email doesn't match!" 
-                : "Mission failed. Check your connection.";
-            toast.error(message);
+            console.error('Login Error:', error);
+            toast.error(error.message || 'Login failed. Please try again.', {
+                style: { background: '#1e293b', color: '#fff' }
+            });
         } finally {
             setLoading(false);
         }
@@ -45,14 +48,14 @@ const Login = () => {
 
     return (
         <div className="min-h-screen bg-white dark:bg-slate-950 flex items-center justify-center p-2 py-5 transition-colors duration-500 overflow-hidden relative">
-            
+
             {/* Ambient Glows (Eye Comfort) */}
             <div className="absolute top-0 left-0 w-125 h-125 bg-rose-600/5 rounded-full blur-[120px] pointer-events-none"></div>
             <div className="absolute bottom-0 right-0 w-125 h-125 bg-rose-600/5 rounded-full blur-[120px] pointer-events-none"></div>
 
             <div className="w-full max-w-lg relative z-10">
-                <div 
-                    data-aos="zoom-in" 
+                <div
+                    data-aos="zoom-in"
                     className="bg-white/70 dark:bg-slate-900/40 backdrop-blur-2xl rounded-[3rem] shadow-2xl shadow-rose-600/5 border border-slate-200 dark:border-white/5 p-8 md:p-12"
                 >
                     {/* Header Section */}
@@ -68,7 +71,7 @@ const Login = () => {
                     </div>
 
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                        
+
                         {/* Email Address */}
                         <div className="space-y-2">
                             <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-2">Email Address</label>
