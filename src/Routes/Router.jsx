@@ -7,6 +7,7 @@ import AuthLayout from "../Layouts/AuthLayout";
 import FourZeroFour from "../Component/ErrorPages/FourZeroFour";
 import BecomeDonor from "../Pages/BecomeAdonor/BecomeDonor";
 import FindDonor from "../Pages/FindDonor/FindDonor";
+import Camps from "../Pages/Camps/Camps";
 
 
 export const router = createBrowserRouter([
@@ -26,6 +27,10 @@ export const router = createBrowserRouter([
       {
         path: "finddonor",
         element: <FindDonor></FindDonor>
+      },
+      {
+        path: "camps",
+      element: <Camps></Camps>
       }
 
     ]
