@@ -7,6 +7,11 @@ import AuthLayout from "../Layouts/AuthLayout";
 import FourZeroFour from "../Component/ErrorPages/FourZeroFour";
 import BecomeDonor from "../Pages/BecomeAdonor/BecomeDonor";
 import FindDonor from "../Pages/FindDonor/FindDonor";
+import Camps from "../Pages/Camps/Camps";
+import PrivateRoute from "./PrivateRoute";
+import PrivacyPolicy from "../Pages/PrivacyPolicy/PrivacyPolicy";
+import TermsAndConditions from "../Pages/TermsAndConditions/TermsAndConditions";
+import About from "../Pages/About/About";
 
 
 export const router = createBrowserRouter([
@@ -21,11 +26,27 @@ export const router = createBrowserRouter([
       },
       {
         path: "become-donor",
-        element: <BecomeDonor></BecomeDonor>
+        element: <PrivateRoute><BecomeDonor></BecomeDonor></PrivateRoute>
       },
       {
         path: "finddonor",
-        element: <FindDonor></FindDonor>
+        element: <PrivateRoute><FindDonor></FindDonor></PrivateRoute>
+      },
+      {
+        path: "camps",
+        element: <PrivateRoute><Camps></Camps></PrivateRoute>
+      },
+      {
+        path: "privacy-policy",
+        element: <PrivacyPolicy></PrivacyPolicy>
+      },
+      {
+        path: "terms-and-conditions",
+        element: <TermsAndConditions></TermsAndConditions>
+      },
+      {
+        path: "about",
+        element: <About></About>
       }
 
     ]
