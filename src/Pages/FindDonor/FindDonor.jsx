@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
-import { Droplet, MapPin, Phone } from 'lucide-react';
+import { MapPin, Phone } from 'lucide-react';
+// AOS Import
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const FindDonor = () => {
     const axiosPublic = useAxiosPublic();
@@ -8,9 +11,14 @@ const FindDonor = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        // AOS Initialize
+        AOS.init({
+            duration: 1000,
+            once: true,
+        });
+
         axiosPublic.get('/users')
             .then(res => {
-                // শুধু যাদের role 'donor' তাদের ফিল্টার করে নেওয়া হচ্ছে
                 const donorList = res.data.filter(user => user.role === 'donor' || user.isDonor === true);
                 setDonors(donorList);
                 setLoading(false);
@@ -26,19 +34,27 @@ const FindDonor = () => {
     }
 
     return (
-        <div className="max-w-6xl mx-auto p-6">
-            <div className="text-center mb-10">
-                <h2 className="text-3xl font-black dark:text-white uppercase italic">Available <span className="text-rose-600">Donors</span></h2>
+        <div className="max-w-6xl mx-auto p-6 overflow-hidden">
+            <div className="text-center mb-10" data-aos="fade-down">
+                <h2 className="text-3xl font-black dark:text-white uppercase italic">
+                    Available <span className="text-rose-600">Donors</span>
+                </h2>
                 <p className="text-slate-500 text-sm mt-2 font-medium">Found {donors.length} heroes ready to help.</p>
             </div>
 
             {donors.length === 0 ? (
-                <div className="text-center text-slate-400 py-20">No donors found at the moment.</div>
+                <div className="text-center text-slate-400 py-20" data-aos="zoom-in">
+                    No donors found at the moment.
+                </div>
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {donors.map(donor => (
+                    {donors.map((donor, index) => (
                         <div 
                             key={donor._id}
+                            // এখানে animation যোগ করা হয়েছে
+                            // index * 100 ব্যবহারের ফলে কার্ডগুলো একটার পর একটা আসবে
+                            data-aos="fade-up"
+                            data-aos-delay={index * 100}
                             className="bg-white dark:bg-slate-900 p-6 rounded-[2.5rem] border border-slate-200 dark:border-white/5 shadow-xl hover:border-rose-500/50 transition-all group"
                         >
                             <div className="flex items-center gap-4 mb-4">
