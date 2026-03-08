@@ -25,10 +25,12 @@ const Footer = () => {
         <div>
           <h3 className="text-slate-900 dark:text-slate-100 font-bold mb-4 uppercase text-xs tracking-widest">Resources</h3>
           <ul className="space-y-2 text-sm">
-            <li><a href="#" className="hover:text-rose-600 dark:hover:text-rose-500 transition-colors">Donor Eligibility</a></li>
-            <li><a href="#" className="hover:text-rose-600 dark:hover:text-rose-500 transition-colors">Blood Types</a></li>
-            <li><a href="#" className="hover:text-rose-600 dark:hover:text-rose-500 transition-colors">Success Stories</a></li>
-            <li><a href="#" className="hover:text-rose-600 dark:hover:text-rose-500 transition-colors">Privacy Policy</a></li>
+            <li><a href="/about" className="hover:text-rose-600 dark:hover:text-rose-500 transition-colors">About</a></li>
+            <li><a href="/donor-eligibility" className="hover:text-rose-600 dark:hover:text-rose-500 transition-colors">Donor Eligibility</a></li>
+            <li><a href="/blood-types" className="hover:text-rose-600 dark:hover:text-rose-500 transition-colors">Blood Types</a></li>
+            <li><a href="/success-stories" className="hover:text-rose-600 dark:hover:text-rose-500 transition-colors">Success Stories</a></li>
+            <li><a href="/privacy-policy" className="hover:text-rose-600 dark:hover:text-rose-500 transition-colors">Privacy Policy</a></li>
+            <li><a href="/terms-and-conditions" className="hover:text-rose-600 dark:hover:text-rose-500 transition-colors">Terms & Conditions</a></li>
           </ul>
         </div>
 

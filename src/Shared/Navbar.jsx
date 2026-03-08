@@ -38,7 +38,7 @@ const Navbar = () => {
 
   const navLinks = [
     { name: 'Find Donors', href: '/finddonor' },
-    { name: 'Donation Camps', href: '#camps' },
+    { name: 'Donation Camps', href: '/camps' },
     { name: 'Blood Inventory', href: '#inventory' },
     { name: 'Emergency Request', href: '#emergency' },
     { name: 'Support Us', href: '/support' },
