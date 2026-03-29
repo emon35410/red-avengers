@@ -1,19 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react';
 import logo from "../assets/Red-Avengers-logo.webp";
-import { Link } from 'react-router';
+import { Link, NavLink } from 'react-router'; // NavLink add kora hoyeche
 import useAuth from '../Hooks/useAuth';
-import { LayoutDashboard, LogOut } from 'lucide-react';
+import { LayoutDashboard, LogOut, Sun, Moon, Menu, X } from 'lucide-react';
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  // const [isDarkMode, setIsDarkMode] = useState(true);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const profileRef = useRef(null);
   const { user, logOut } = useAuth();
+  
   const [isDarkMode, setIsDarkMode] = useState(() => {
     return localStorage.getItem('theme') === 'dark' || !('theme' in localStorage);
   });
+
   const defaultAvatar = "https://ui-avatars.com/api/?name=Avenger&background=e11d48&color=fff";
+
   useEffect(() => {
     const root = window.document.documentElement;
     if (isDarkMode) {
@@ -24,7 +26,6 @@ const Navbar = () => {
       localStorage.setItem('theme', 'light');
     }
   }, [isDarkMode]);
-
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -39,8 +40,8 @@ const Navbar = () => {
   const navLinks = [
     { name: 'Find Donors', href: '/finddonor' },
     { name: 'Donation Camps', href: '/camps' },
-    { name: 'Blood Inventory', href: '#inventory' },
-    { name: 'Emergency Request', href: '#emergency' },
+    { name: 'Blood Inventory', href: '/inventory' },
+    { name: 'Emergency Request', href: '/emergency' },
     { name: 'Support Us', href: '/support' },
   ];
 
@@ -50,99 +51,102 @@ const Navbar = () => {
       .catch(error => console.log(error));
   };
 
+  // Active Link Styling Function
+  const getLinkStyles = ({ isActive }) => `
+    relative px-4 py-2 rounded-xl text-xs font-black uppercase 
+    ${isActive 
+      ? "text-rose-600 dark:text-rose-500 bg-rose-500/10 shadow-[0_0_25px_rgba(225,29,72,0.15)] ring-1 ring-rose-500/20" 
+      : "text-slate-600 dark:text-slate-400 hover:text-rose-500 hover:bg-rose-500/5"
+    }
+  `;
+
   return (
-    <nav className="bg-white dark:bg-slate-950 border-b border-gray-200 dark:border-rose-900/30 px-4 py-3 sticky top-0 z-50 shadow-lg transition-colors duration-500 font-sans">
+    <nav className="bg-white/80 dark:bg-[#06060e]/80 border-b border-slate-200 dark:border-rose-900/20 px-4 py-3 sticky top-0 z-50 backdrop-blur-md transition-colors duration-500 font-sans">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
 
-        {/* Logo Section */}
-        <Link to="/" className="flex items-center gap-3 group cursor-pointer">
-          <div className="relative h-10 w-10 md:h-14 md:w-14 flex items-center justify-center">
+        {/* --- Logo Section --- */}
+        <Link to="/" className="flex items-center gap-3 group active:scale-95 transition-transform">
+          <div className="relative h-10 w-10 md:h-12 md:w-12 flex items-center justify-center">
+            <div className="absolute inset-0 bg-rose-600/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
             <img
               src={logo}
-              alt="Red Avengers Logo"
-              className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-110 brightness-90 group-hover:brightness-100"
+              alt="Logo"
+              className="relative h-full w-full object-contain transition-all duration-500 group-hover:scale-110 group-hover:rotate-3"
             />
           </div>
           <div className="flex flex-col">
-            <span className="text-red-600 font-black tracking-tighter text-lg leading-none italic group-hover:text-rose-500 transition-colors uppercase">
-              Red <span className="text-green-600">Avengers</span>
+            <span className="text-rose-600 dark:text-rose-500 font-black tracking-tighter text-lg leading-none italic uppercase">
+              Red <span className="text-green-600 dark:text-white transition-colors">Avengers</span>
             </span>
           </div>
         </Link>
 
-        <div className="flex items-center gap-1 md:gap-5">
+        <div className="flex items-center gap-2 md:gap-4">
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-1 mr-2">
+          {/* --- Desktop Navigation --- */}
+          <div className="hidden lg:flex items-center space-x-1">
             {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                to={link.href}
-                className="px-3 py-2 rounded-md text-slate-600 dark:text-slate-400 hover:text-rose-500 hover:bg-rose-500/5 transition-all duration-200 text-sm font-bold uppercase tracking-wider"
-              >
-                {link.name}
-              </Link>
+              <NavLink key={link.name} to={link.href} className={getLinkStyles}>
+                {({ isActive }) => (
+                  <>
+                    {link.name}
+                    {/* Active Underglow Dot */}
+                    <span className={`absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-rose-600 transition-all duration-500
+                      ${isActive ? "opacity-100 scale-100" : "opacity-0 scale-0 group-hover:opacity-40"}`} 
+                    />
+                  </>
+                )}
+              </NavLink>
             ))}
           </div>
 
-          {/* Theme Toggle */}
+          {/* --- Theme Toggle --- */}
           <button
             onClick={() => setIsDarkMode(!isDarkMode)}
-            className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-yellow-400 border border-slate-200 dark:border-slate-800 transition-all duration-300 hover:ring-2 hover:ring-rose-500/50"
-            aria-label="Toggle Theme"
+            className="p-2.5 rounded-2xl bg-slate-100 dark:bg-[#0c0c14] text-slate-600 dark:text-rose-500 border border-slate-200 dark:border-zinc-800/50 transition-all hover:ring-2 hover:ring-rose-500/30"
           >
-            {isDarkMode ? (
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" /></svg>
-            ) : (
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" /></svg>
-            )}
+            {isDarkMode ? <Sun size={18} className="text-amber-400" /> : <Moon size={18} />}
           </button>
 
-          {/* User Auth Section */}
+          {/* --- User Auth Section --- */}
           {user ? (
             <div className="flex items-center gap-3 relative" ref={profileRef}>
-              {/* User Profile Image as Button */}
               <button
                 onClick={() => setIsProfileOpen(!isProfileOpen)}
-                className="relative group focus:outline-none"
+                className="relative focus:outline-none"
               >
-                <div className="h-10 w-10 md:h-11 md:w-11 rounded-full p-0.5 bg-linear-to-tr from-rose-600 to-red-400 transition-transform active:scale-90">
+                <div className="h-10 w-10 rounded-2xl p-0.5 bg-linear-to-tr from-rose-600 to-rose-400 shadow-lg shadow-rose-500/20 active:scale-90 transition-transform">
                   <img
                     src={user?.photoURL || defaultAvatar}
                     alt="User"
-                    onError={(e) => { e.targest.src = defaultAvatar; }} 
-                    className="h-full w-full rounded-full object-cover border-2 border-white dark:border-slate-950"
+                    className="h-full w-full rounded-[14px] object-cover border-2 border-white dark:border-[#06060e]"
                   />
                 </div>
               </button>
 
-              {/* USER DROPDOWN MENU */}
+              {/* Dropdown Menu */}
               {isProfileOpen && (
-                <div className="absolute top-14 right-0 w-52 bg-white dark:bg-slate-900 border border-slate-200 dark:border-rose-900/30 rounded-2xl shadow-2xl py-2 z-50 animate-in fade-in slide-in-from-top-2">
-
-                  {/* user info in dropdown */}
-                  <div className="px-4 py-3 border-b border-slate-100 dark:border-slate-800 mb-1">
-                    <p className="text-sm font-bold text-slate-800 dark:text-slate-200 truncate italic">
+                <div className="absolute top-14 right-0 w-56 bg-white dark:bg-[#0c0c14] border border-slate-200 dark:border-rose-900/20 rounded-3xl shadow-2xl py-3 z-50 animate-in fade-in slide-in-from-top-4 duration-300">
+                  <div className="px-5 py-3 border-b border-slate-100 dark:border-zinc-800/50 mb-2">
+                    <p className="text-sm font-black text-slate-800 dark:text-white truncate uppercase tracking-tight">
                       {user?.displayName || "Avenger"}
                     </p>
+                    <p className="text-[10px] font-bold text-slate-400 truncate mt-0.5">{user?.email}</p>
                   </div>
 
-                  <div className="flex flex-col gap-1 px-2">
+                  <div className="px-2 space-y-1">
                     <Link
                       to="/dashboard"
                       onClick={() => setIsProfileOpen(false)}
-                      className="flex items-center gap-3 px-3 py-2.5 text-sm font-bold text-slate-600 dark:text-slate-400 hover:text-rose-600 hover:bg-rose-500/5 rounded-xl transition-all uppercase "
+                      className="flex items-center gap-3 px-4 py-3 text-[11px] font-black text-slate-600 dark:text-slate-400 hover:text-rose-600 hover:bg-rose-500/5 rounded-xl transition-all uppercase tracking-widest"
                     >
-                      <span className="text-lg"><LayoutDashboard></LayoutDashboard></span>
-                      Dashboard
+                      <LayoutDashboard size={16} /> Dashboard
                     </Link>
-
                     <button
                       onClick={handleLogOut}
-                      className="w-full flex items-center gap-3 px-3 py-2.5 text-sm font-bold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-500/5 rounded-xl transition-all uppercase  text-left"
+                      className="w-full flex items-center gap-3 px-4 py-3 text-[11px] font-black text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-500/10 rounded-xl transition-all uppercase tracking-widest text-left"
                     >
-                      <span className="text-lg"><LogOut></LogOut></span>
-                      Logout
+                      <LogOut size={16} /> Logout
                     </button>
                   </div>
                 </div>
@@ -151,50 +155,48 @@ const Navbar = () => {
           ) : (
             <Link
               to="/login"
-              className="hidden md:block px-6 py-2.5 rounded-full text-sm font-black italic tracking-widest uppercase bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:opacity-90 transition-all active:scale-95 shadow-xl shadow-slate-900/10"
+              className="hidden md:flex items-center justify-center px-7 py-2.5 rounded-2xl text-[11px] font-black italic tracking-[0.15em] uppercase bg-slate-900 dark:bg-rose-600 text-white hover:shadow-[0_10px_20px_rgba(225,29,72,0.2)] transition-all active:scale-95"
             >
               Login
             </Link>
           )}
 
-          {/* Mobile Menu Toggle */}
+          {/* Mobile Toggle */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors"
+            className="lg:hidden p-2 rounded-xl text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-[#0c0c14] border border-transparent dark:border-zinc-800/50"
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              {isMobileMenuOpen
-                ? <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                : <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
-              }
-            </svg>
+            {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Dropdown Menu */}
+      {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden mt-3 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-4 shadow-2xl animate-in fade-in slide-in-from-top-2">
-          {navLinks.map((link) => (
-            <Link
-              key={link.name}
-              to={link.href}
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="block px-4 py-3 text-slate-600 dark:text-slate-400 hover:text-rose-500 hover:bg-rose-500/5 rounded-xl font-bold uppercase tracking-wider transition-all"
-            >
-              {link.name}
-            </Link>
-          ))}
-          {!user && (
-            <div className="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800">
-              <Link
-                to="/login"
+        <div className="lg:hidden mt-4 bg-white dark:bg-[#0c0c14] rounded-3xl border border-slate-200 dark:border-rose-900/20 p-4 shadow-2xl animate-in slide-in-from-top-5">
+          <div className="space-y-1">
+            {navLinks.map((link) => (
+              <NavLink
+                key={link.name}
+                to={link.href}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="w-full block bg-slate-900 dark:bg-white text-white dark:text-slate-900 py-3.5 rounded-xl text-center font-black italic uppercase tracking-[0.2em]"
+                className={({ isActive }) => `
+                  block px-5 py-4 rounded-2xl text-[11px] font-black uppercase tracking-widest transition-all
+                  ${isActive ? "text-rose-600 bg-rose-500/10" : "text-slate-600 dark:text-slate-400"}
+                `}
               >
-                Login
-              </Link>
-            </div>
+                {link.name}
+              </NavLink>
+            ))}
+          </div>
+          {!user && (
+            <Link
+              to="/login"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="mt-4 w-full block bg-rose-600 text-white py-4 rounded-2xl text-center font-black italic uppercase tracking-[0.2em] shadow-lg shadow-rose-500/20"
+            >
+              Login
+            </Link>
           )}
         </div>
       )}
