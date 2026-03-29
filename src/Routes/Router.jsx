@@ -16,6 +16,15 @@ import Support from "../Pages/Support/Support";
 import PaymentSuccess from "../Pages/Payments/PaymentSuccess";
 import PaymentFail from "../Pages/Payments/PaymentFail";
 import PaymentCancel from "../Pages/Payments/PaymentCancel";
+import BloodInventory from "../Pages/BloodInventory/BloodInventory";
+import DonorEligibility from "../Pages/DonorEligibility/DonorEligibility";
+import SuccessStories from "../Pages/SuccessStories/SuccessStories";
+import BloodTypes from "../Pages/BloodTypes/BloodTypes";
+import EmergencyRequests from "../Pages/EmergencyRequests/EmergencyRequests";
+import DashboardLayout from "../Layouts/DashboardLayout";
+import { User } from "lucide-react";
+import UserManagement from "../Pages/AdminPages/UserManagement/UserManagement";
+import Dashboard from "../Context/Dashboard/DashboardHomepage/Dashboard";
 
 
 export const router = createBrowserRouter([
@@ -31,6 +40,10 @@ export const router = createBrowserRouter([
       {
         path: "become-donor",
         element: <PrivateRoute><BecomeDonor></BecomeDonor></PrivateRoute>
+      },
+      {
+        path: "inventory",
+        element: <BloodInventory></BloodInventory>
       },
       {
         path: "finddonor",
@@ -51,6 +64,22 @@ export const router = createBrowserRouter([
       {
         path: "about",
         element: <About></About>
+      },
+      {
+        path: "donor-eligibility",
+        element: <DonorEligibility></DonorEligibility>
+      },
+      {
+        path: "success-stories",
+        element: <SuccessStories></SuccessStories>
+      },
+      {
+        path: "blood-types",
+        element: <BloodTypes></BloodTypes>
+      },
+      {
+        path: "emergency",
+        element: <EmergencyRequests></EmergencyRequests>
       },
       {
         path: "support",
@@ -83,6 +112,20 @@ export const router = createBrowserRouter([
       {
         path: "signup",
         Component: Signup
+      }
+    ]
+  },
+  {
+    path: "dashboard",
+    element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
+    children: [
+      {
+        index: true,
+        element: <Dashboard></Dashboard>
+      },
+      {
+        path: "users",
+        element: <UserManagement></UserManagement>
       }
     ]
   }
