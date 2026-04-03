@@ -20,6 +20,7 @@ const VOLUNTEER_NAV = [
       },
       { to: "/dashboard/donors", icon: Users, label: "Assigned Donors" },
       { to: "/dashboard/requests", icon: HeartPulse, label: "Blood Requests" },
+      { to: "/dashboard/inventory", icon: ClipboardList, label: "Blood Inventory" },
       { to: "/dashboard/notices", icon: Bell, label: "Notices" },
       { to: "/dashboard/profile", icon: User, label: "My Profile" },
     ],

@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Search, Filter, Users, Shield, Droplet, UserCheck, Mail, TrendingUp } from 'lucide-react';
+import { Search, Filter, Users, Shield, Droplet, UserCheck, Mail } from 'lucide-react';
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import useAxiosSecure from "../../../Hooks/useAxiousSecure";
 import { useTheme } from '../../../Layouts/BaseLayout';
@@ -56,9 +56,9 @@ function ActionButton({ user, onUpdate, dark }) {
 /* ── Stat Card ── */
 function StatCard({ label, val, color, dark }) {
   return (
-    <div className={`p-5 rounded-2xl border transition-colors duration-200
+    <div className={`p-6 rounded-3xl border transition-colors duration-200
       ${dark ? 'bg-[#0f0f1a] border-[#1c1c2e]' : 'bg-white border-slate-200 shadow-sm'}`}>
-      <div className={`text-[9px] uppercase tracking-widest font-bold mb-1.5
+      <div className={`text-[15px] uppercase tracking-widest font-bold mb-1.5
         ${dark ? 'text-slate-500' : 'text-slate-400'}`}>{label}</div>
       <div className="font-black text-2xl" style={{ color }}>{val}</div>
     </div>
@@ -172,19 +172,16 @@ const UserManagement = () => {
         {/* ── Header ── */}
         <header className="flex flex-wrap items-end justify-between gap-6 mb-10">
           <div>
-            <div className="flex items-center gap-2 text-[10px] font-bold text-rose-500 uppercase tracking-[0.4em] mb-2">
-              <span>◈</span> System Control
-            </div>
-            <h1 className={`font-serif italic font-black text-4xl tracking-tight ${dark ? 'text-white' : 'text-slate-800'}`}>
+            <h1 className={`font-serif  font-black text-4xl tracking-tight ${dark ? 'text-white' : 'text-slate-800'}`}>
               User Registry
             </h1>
           </div>
-          <div className={`border rounded-2xl p-4 flex items-center gap-4 transition-colors duration-200
+          <div className={`border rounded-2xl p-3 flex items-center gap-4 transition-colors duration-200
             ${dark ? 'bg-[#0f0f1a] border-[#252538]' : 'bg-white border-slate-200 shadow-sm'}`}>
             <Users className="text-rose-500" size={20} />
             <div>
               <div className={`text-[9px] uppercase tracking-widest font-bold ${C.label}`}>Total Records</div>
-              <div className={`font-serif text-3xl font-black ${dark ? 'text-white' : 'text-slate-800'}`}>{users.length}</div>
+              <div className={`font-serif text-2xl font-black ${dark ? 'text-white' : 'text-slate-800'}`}>{users.length}</div>
             </div>
           </div>
         </header>
@@ -200,7 +197,7 @@ const UserManagement = () => {
         {/* ── Toolbar ── */}
         <div className="flex flex-wrap gap-3 mb-5">
           {/* Search */}
-          <div className={`flex-1 min-w-60 border rounded-xl px-4 py-3 flex items-center gap-3
+          <div className={`flex-1 min-w-60 border rounded-xl px-5 py-4 flex items-center gap-3
             focus-within:border-rose-500 transition-all duration-200
             ${dark ? 'bg-[#0f0f1a] border-[#252538]' : 'bg-white border-slate-200 shadow-sm'}`}>
             <Search size={14} className={C.subtext} />

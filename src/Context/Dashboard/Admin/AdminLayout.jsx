@@ -1,7 +1,8 @@
 import {
   LayoutDashboard, Users, BarChart2,
   Droplet, ClipboardList, Bell, 
-  MapPin, HeartPulse, AlertCircle, UserCircle 
+  MapPin, HeartPulse, AlertCircle, UserCircle,
+  MapPinCheck
 } from "lucide-react";
 import BaseLayout from "../../../Layouts/BaseLayout";
 
@@ -15,9 +16,9 @@ const ADMIN_NAV = [
       { to: "/dashboard/volunteers",   icon: HeartPulse,      label: "Volunteers"      },
       { to: "/dashboard/requests",     icon: AlertCircle,     label: "All Requests", badge: "5" },
       { to: "/dashboard/drives",       icon: MapPin,          label: "Blood Drives"    },
-      { to: "/dashboard/inventory",    icon: ClipboardList,   label: "Blood Inventory" },
+       { to: "/dashboard/addCamp",        icon: MapPinCheck,           label: "Add Camp"    },
       { to: "/dashboard/notices",      icon: Bell,            label: "Notices"         },
-          { to: "/dashboard/profile",     icon: UserCircle,      label: "My Profile"      }, 
+      { to: "/dashboard/profile",     icon: UserCircle,      label: "My Profile"      }, 
     ],
   },
 ];
