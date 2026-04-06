@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import { motion } from 'framer-motion';
+// import { motion } from 'framer-motion';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
-import { format, differenceInDays } from 'date-fns';
+import {  differenceInDays } from 'date-fns';
 
 const BLOOD_COLORS = {
   'A+': 'from-rose-500 to-red-600', 'A-': 'from-red-400 to-rose-500',

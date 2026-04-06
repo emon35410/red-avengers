@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, createContext, useContext } from "react";
-import { Outlet, NavLink, useNavigate, Link } from "react-router"; // Added Link
+import { Outlet, NavLink, useNavigate, Link } from "react-router"; 
 import {
   Droplet, LogOut, Bell, Sun, Moon, Menu, X,
   CheckCheck, Info, AlertTriangle, Clock, Trash2, ChevronRight
@@ -7,12 +7,10 @@ import {
 import useAuth from "../Hooks/useAuth";
 import logo from "../assets/Red-Avengers-logo.webp";
 
-/* ─── Theme Context ─────────────────────────────────────────────── */
+// Theme Context
 const ThemeContext = createContext();
-// eslint-disable-next-line react-refresh/only-export-components
 export const useTheme = () => useContext(ThemeContext);
 
-/* ─── Notification Helpers ──────────────────────────────────────── */
 const INITIAL_NOTIFICATIONS = [
   { id: 1, type: "info",    title: "New admission request",    desc: "Arif Hossain submitted an application.", time: "2m ago",    read: false },
   { id: 2, type: "success", title: "Application approved",     desc: "Sadia Islam has been enrolled.",         time: "18m ago", read: false },
@@ -22,12 +20,12 @@ const INITIAL_NOTIFICATIONS = [
 ];
 
 const NOTIF_STYLE = {
-  info:    { icon: <Info size={13} />,          dot: "bg-sky-400",     iconBg: "bg-sky-500/10 text-sky-400",         border: "border-sky-500/20"     },
+  info:    { icon: <Info size={13} />,          dot: "bg-sky-400",     iconBg: "bg-sky-500/10 text-sky-400",         border: "border-sky-500/20"      },
   success: { icon: <CheckCheck size={13} />,    dot: "bg-emerald-400", iconBg: "bg-emerald-500/10 text-emerald-400", border: "border-emerald-500/20" },
-  warning: { icon: <AlertTriangle size={13} />, dot: "bg-amber-400",   iconBg: "bg-amber-500/10 text-amber-400",     border: "border-amber-500/20"   },
+  warning: { icon: <AlertTriangle size={13} />, dot: "bg-amber-400",   iconBg: "bg-amber-500/10 text-amber-400",     border: "border-amber-500/20"    },
 };
 
-/* ─── Real-time Clock ───────────────────────────────────────────── */
+// Real-time Clock Hook
 function useClock() {
   const [now, setNow] = useState(new Date());
   useEffect(() => {
@@ -37,7 +35,6 @@ function useClock() {
   return now;
 }
 
-/* ─── Notification Panel ────────────────────────────────────────── */
 const NotificationPanel = ({ dark, onClose, notifications, onMarkRead, onMarkAllRead, onDelete }) => {
   const unread = notifications.filter(n => !n.read).length;
   return (
@@ -97,20 +94,10 @@ const NotificationPanel = ({ dark, onClose, notifications, onMarkRead, onMarkAll
           })
         )}
       </div>
-
-      {notifications.length > 0 && (
-        <div className={`px-5 py-3 border-t text-center ${dark ? "border-zinc-800" : "border-slate-100"}`}>
-          <button className={`text-[10px] font-black uppercase tracking-widest transition-colors
-            ${dark ? "text-zinc-500 hover:text-zinc-200" : "text-slate-400 hover:text-slate-600"}`}>
-            View All Notifications
-          </button>
-        </div>
-      )}
     </div>
   );
 };
 
-/* ─── Single Nav Item ────────────────────────────────────────────── */
 const NavItem = ({ to, icon: Icon, label, badge, dark }) => (
   <NavLink
     to={to}
@@ -146,11 +133,10 @@ const NavItem = ({ to, icon: Icon, label, badge, dark }) => (
   </NavLink>
 );
 
-/* ─── Sidebar Nav ────────────────────────────────────────────────── */
 const SidebarNav = ({ navSections, dark }) => (
   <div className="space-y-6">
-    {navSections.map((section, index) => ( // added index for safety
-      <div key={section.label || index}> {/* 👈 Added unique key here */}
+    {navSections.map((section, index) => (
+      <div key={section.label || index}> 
         <p className={`px-3 mb-2 text-[9px] font-black uppercase tracking-[0.25em] ${dark ? "text-zinc-600" : "text-slate-400"}`}>
           {section.label}
         </p>
@@ -164,7 +150,6 @@ const SidebarNav = ({ navSections, dark }) => (
   </div>
 );
 
-/* ─── Base Layout ────────────────────────────────────────────────── */
 export default function BaseLayout({ navSections = [], roleLabel = "User" }) {
   const [dark, setDark]               = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -193,7 +178,7 @@ export default function BaseLayout({ navSections = [], roleLabel = "User" }) {
 
   return (
     <ThemeContext.Provider value={{ dark, toggle: () => setDark(d => !d) }}>
-      <div className={`flex h-screen overflow-hidden transition-colors duration-200 font-sans ${dark ? "bg-[#06060e]" : "bg-slate-50"}`}>
+      <div className={`flex h-screen overflow-hidden transition-colors duration-300 font-sans ${dark ? "bg-[#06060e]" : "bg-slate-50"}`}>
 
         {/* Mobile backdrop */}
         {sidebarOpen && (
@@ -207,38 +192,26 @@ export default function BaseLayout({ navSections = [], roleLabel = "User" }) {
           ${dark ? "bg-[#0c0c14] border-zinc-800/50" : "bg-white border-slate-200"}
           ${sidebarOpen ? "translate-x-0" : "-translate-x-full xl:translate-x-0"}
         `}>
-          {/* ── Logo Section ── */}
           <div className={`px-6 py-8 border-b flex items-center justify-between transition-all ${dark ? "border-zinc-800/40" : "border-slate-100"}`}>
             <Link to="/" className="flex items-center gap-3.5 group cursor-pointer outline-none">
               <div className="relative shrink-0">
-                {dark && (
-                  <div className="absolute inset-0 bg-rose-600/20 blur-xl rounded-full group-hover:bg-rose-600/40 transition-all duration-500" />
-                )}
-                <div className={`
-                  relative w-11 h-11 rounded-2xl flex items-center justify-center 
-                  transition-all duration-300 group-hover:rotate-10 group-hover:scale-110
-                  ${dark 
-                    ? "bg-linear-to-br from-rose-500 to-rose-700 shadow-lg shadow-rose-900/20" 
-                    : "bg-rose-600 shadow-lg shadow-rose-200"}
-                `}>
+                {dark && <div className="absolute inset-0 bg-rose-600/20 blur-xl rounded-full group-hover:bg-rose-600/40 transition-all duration-500" />}
+                <div className={`relative w-11 h-11 rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:rotate-10 group-hover:scale-110
+                  ${dark ? "bg-linear-to-br from-rose-500 to-rose-700 shadow-lg shadow-rose-900/20" : "bg-rose-600 shadow-lg shadow-rose-200"}`}>
                   <img src={logo} alt="Logo" className="w-7 h-7 object-contain brightness-0 invert" />
                 </div>
               </div>
-
               <div className="flex flex-col">
-                <p className={`text-sm font-black leading-none tracking-tight text-red-500`}>
+                <p className="text-sm font-black leading-none tracking-tight text-red-500">
                   RED <span className="text-green-500 italic">AVENGERS</span>
                 </p>
-               
               </div>
             </Link>
-
             <button onClick={() => setSidebarOpen(false)} className={`xl:hidden p-2 rounded-xl transition-all ${dark ? "text-zinc-500 hover:bg-zinc-800 hover:text-white" : "text-slate-400 hover:bg-slate-100"}`}>
               <X size={20} />
             </button>
           </div>
 
-          {/* Nav */}
           <nav className="flex-1 px-4 py-6 overflow-y-auto">
             <p className={`px-3 mb-5 text-[9px] font-black uppercase tracking-[0.25em] ${dark ? "text-zinc-600" : "text-slate-400"}`}>
               {roleLabel} Menu
@@ -246,14 +219,9 @@ export default function BaseLayout({ navSections = [], roleLabel = "User" }) {
             <SidebarNav navSections={navSections} dark={dark} />
           </nav>
 
-          {/* User footer */}
           <div className={`p-4 border-t ${dark ? "border-zinc-800/50" : "border-slate-100"}`}>
             <div className={`flex items-center gap-3 p-2 rounded-xl transition-colors ${dark ? "hover:bg-zinc-800/50" : "hover:bg-slate-50"}`}>
-              <img
-                src={user?.photoURL || "https://avatar.iran.liara.run/public"}
-                className={`w-9 h-9 rounded-lg border object-cover ${dark ? "border-zinc-700" : "border-slate-200"}`}
-                alt="avatar"
-              />
+              <img src={user?.photoURL || "https://avatar.iran.liara.run/public"} className={`w-9 h-9 rounded-lg border object-cover ${dark ? "border-zinc-700" : "border-slate-200"}`} alt="avatar" />
               <div className="flex-1 min-w-0">
                 <p className={`text-xs font-bold truncate ${dark ? "text-zinc-200" : "text-slate-700"}`}>{user?.displayName || "Member"}</p>
                 <button onClick={handleLogout} className="text-[10px] text-rose-500 font-bold hover:underline flex items-center gap-1 mt-0.5 transition-all active:scale-95">
@@ -266,20 +234,15 @@ export default function BaseLayout({ navSections = [], roleLabel = "User" }) {
 
         {/* ── MAIN COLUMN ───────────────────────────────────── */}
         <div className="flex-1 flex flex-col overflow-hidden min-w-0">
-
-          {/* ── NAVBAR ──────────────────────────────────────── */}
+          
+          {/* NAVBAR */}
           <header className={`shrink-0 border-b backdrop-blur-md z-40 ${dark ? "bg-[#0c0c14]/90 border-zinc-800/50" : "bg-white/90 border-slate-200"}`}>
             <div className="flex items-center justify-between px-4 xl:px-8 h-16 gap-4">
-
-              {/* Left: hamburger + clock */}
               <div className="flex items-center gap-4">
-                <button onClick={() => setSidebarOpen(true)}
-                  className={`xl:hidden p-2 rounded-lg border transition-all active:scale-95 ${dark ? "bg-zinc-800 border-zinc-700 text-zinc-400" : "bg-slate-100 border-slate-200 text-slate-500"}`}>
+                <button onClick={() => setSidebarOpen(true)} className={`xl:hidden p-2 rounded-lg border transition-all active:scale-95 ${dark ? "bg-zinc-800 border-zinc-700 text-zinc-400" : "bg-slate-100 border-slate-200 text-slate-500"}`}>
                   <Menu size={18} />
                 </button>
-
-                <div className={`flex items-center gap-3 px-4 py-2 rounded-xl border
-                  ${dark ? "bg-zinc-900/60 border-zinc-800" : "bg-slate-50 border-slate-200"}`}>
+                <div className={`flex items-center gap-3 px-4 py-2 rounded-xl border ${dark ? "bg-zinc-900/60 border-zinc-800" : "bg-slate-50 border-slate-200"}`}>
                   <Clock size={14} className="text-rose-500" />
                   <div className="hidden sm:block">
                     <p className={`text-sm font-black tabular-nums leading-none tracking-tight ${dark ? "text-white" : "text-slate-800"}`}>{timeStr}</p>
@@ -288,54 +251,32 @@ export default function BaseLayout({ navSections = [], roleLabel = "User" }) {
                 </div>
               </div>
 
-              {/* Right: theme + bell + avatar */}
               <div className="flex items-center gap-2.5">
-                <button onClick={() => setDark(d => !d)}
-                  className={`w-10 h-10 rounded-xl border flex items-center justify-center transition-all active:scale-95
-                    ${dark ? "bg-zinc-800 border-zinc-700 text-amber-400 hover:bg-zinc-700" : "bg-slate-100 border-slate-200 text-slate-500 hover:bg-slate-200"}`}>
+                <button onClick={() => setDark(!dark)} className={`w-10 h-10 rounded-xl border flex items-center justify-center transition-all active:scale-95 ${dark ? "bg-zinc-800 border-zinc-700 text-amber-400 hover:bg-zinc-700" : "bg-slate-100 border-slate-200 text-slate-500 hover:bg-slate-200"}`}>
                   {dark ? <Sun size={17} /> : <Moon size={17} />}
                 </button>
 
-                {/* Bell */}
                 <div className="relative" ref={notifRef}>
-                  <button onClick={() => setNotifOpen(o => !o)}
-                    className={`relative w-10 h-10 rounded-xl border flex items-center justify-center transition-all active:scale-95
-                      ${notifOpen
-                        ? dark ? "bg-zinc-700 border-zinc-600 text-white" : "bg-slate-200 border-slate-300 text-slate-700"
-                        : dark ? "bg-zinc-800 border-zinc-700 text-zinc-400 hover:bg-zinc-700 hover:text-white" : "bg-slate-100 border-slate-200 text-slate-500 hover:bg-slate-200"}`}>
+                  <button onClick={() => setNotifOpen(!notifOpen)} className={`relative w-10 h-10 rounded-xl border flex items-center justify-center transition-all active:scale-95 ${notifOpen ? dark ? "bg-zinc-700 border-zinc-600 text-white" : "bg-slate-200 border-slate-300 text-slate-700" : dark ? "bg-zinc-800 border-zinc-700 text-zinc-400 hover:bg-zinc-700 hover:text-white" : "bg-slate-100 border-slate-200 text-slate-500 hover:bg-slate-200"}`}>
                     <Bell size={17} />
-                    {unreadCount > 0 && (
-                      <span className="absolute -top-1 -right-1 min-w-4.5 h-4.5 px-1 bg-rose-500 text-white text-[9px] font-black rounded-full flex items-center justify-center border-2 border-[#0c0c14] shadow-lg shadow-rose-900/40">
-                        {unreadCount > 9 ? "9+" : unreadCount}
-                      </span>
-                    )}
+                    {unreadCount > 0 && <span className="absolute -top-1 -right-1 min-w-4.5 h-4.5 px-1 bg-rose-500 text-white text-[9px] font-black rounded-full flex items-center justify-center border-2 border-[#0c0c14] shadow-lg shadow-rose-900/40">{unreadCount > 9 ? "9+" : unreadCount}</span>}
                   </button>
-                  {notifOpen && (
-                    <NotificationPanel dark={dark} onClose={() => setNotifOpen(false)}
-                      notifications={notifications} onMarkRead={handleMarkRead}
-                      onMarkAllRead={handleMarkAllRead} onDelete={handleDelete} />
-                  )}
+                  {notifOpen && <NotificationPanel dark={dark} onClose={() => setNotifOpen(false)} notifications={notifications} onMarkRead={handleMarkRead} onMarkAllRead={handleMarkAllRead} onDelete={handleDelete} />}
                 </div>
 
-                {/* Avatar */}
                 <div className="hidden md:flex items-center gap-2.5 ml-2">
-                  <img src={user?.photoURL || "https://avatar.iran.liara.run/public"}
-                    className={`w-9 h-9 rounded-xl border object-cover ${dark ? "border-zinc-700" : "border-slate-200"}`} alt="avatar" />
+                  <img src={user?.photoURL || "https://avatar.iran.liara.run/public"} className={`w-9 h-9 rounded-xl border object-cover ${dark ? "border-zinc-700" : "border-slate-200"}`} alt="avatar" />
                   <div className="text-left">
-                    <p className={`text-xs font-black leading-none ${dark ? "text-zinc-100" : "text-slate-700"}`}>
-                      {user?.displayName?.split(" ")[0] || "Admin"}
-                    </p>
-                    <p className={`text-[10px] font-bold uppercase tracking-widest leading-none mt-0.5 ${dark ? "text-zinc-600" : "text-slate-400"}`}>
-                      {roleLabel}
-                    </p>
+                    <p className={`text-xs font-black leading-none ${dark ? "text-zinc-100" : "text-slate-700"}`}>{user?.displayName?.split(" ")[0] || "Admin"}</p>
+                    <p className={`text-[10px] font-bold uppercase tracking-widest leading-none mt-0.5 ${dark ? "text-zinc-600" : "text-slate-400"}`}>{roleLabel}</p>
                   </div>
                 </div>
               </div>
             </div>
           </header>
 
-          {/* Page Content */}
-          <main className="flex-1 overflow-y-auto bg-transparent scroll-smooth">
+          {/* PAGE CONTENT: Fixed background conflict */}
+          <main className="flex-1 overflow-y-auto scroll-smooth bg-transparent">
             <div className="p-6 xl:p-10 max-w-7xl mx-auto min-h-full">
               <Outlet />
             </div>

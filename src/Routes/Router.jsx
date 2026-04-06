@@ -25,6 +25,11 @@ import DashboardLayout from "../Layouts/DashboardLayout";
 import { User } from "lucide-react";
 import UserManagement from "../Pages/AdminPages/UserManagement/UserManagement";
 import Dashboard from "../Context/Dashboard/DashboardHomepage/Dashboard";
+import AddCamp from "../Pages/AdminPages/AddCamps/AddCamp";
+import AddInventory from "../Pages/AdminPages/AddInventory/AddInventory";
+import MyProfile from "../Pages/Profile/MyProfile";
+import AllDonors from "../Pages/AdminPages/AllDonors/AllDonors";
+import AllVolunteers from "../Pages/AdminPages/AllVolunteers/AllVolunteers";
 
 
 export const router = createBrowserRouter([
@@ -126,6 +131,27 @@ export const router = createBrowserRouter([
       {
         path: "users",
         element: <UserManagement></UserManagement>
+      },
+      {
+        path: "addCamp",
+        element: <AddCamp></AddCamp>
+      },
+      {
+        path: "inventory",
+        element: <AddInventory></AddInventory>
+
+      },
+      {
+        path: "profile",
+        element: <MyProfile></MyProfile>
+      },
+      {
+        path:"donors",
+        element: <AllDonors></AllDonors>
+      },
+      {
+        path:"volunteers",
+        element: <AllVolunteers></AllVolunteers>
       }
     ]
   }

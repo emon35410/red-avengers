@@ -1,5 +1,5 @@
-import React, { useState, useMemo } from 'react';
-import { Search, Filter, Users, Shield, Droplet, UserCheck, Mail, TrendingUp } from 'lucide-react';
+import React, { useState, useCallback, useEffect } from 'react';
+import { Search, Filter, Users, Shield, Droplet, UserCheck, Mail, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import useAxiosSecure from "../../../Hooks/useAxiousSecure";
 import { useTheme } from '../../../Layouts/BaseLayout';
@@ -10,6 +10,8 @@ const ROLE_CFG = {
   volunteer: { label: 'Volunteer', color: '#10b981', bg: 'rgba(16,185,129,0.12)',  icon: <UserCheck size={11} /> },
   admin:     { label: 'Admin',     color: '#f59e0b', bg: 'rgba(245,158,11,0.12)',  icon: <Shield size={11} /> },
 };
+
+const PAGE_SIZE_OPTIONS = [5, 10, 20, 50];
 
 /* ── Restrict / Unrestrict Button ── */
 function ActionButton({ user, onUpdate, dark }) {
@@ -56,31 +58,100 @@ function ActionButton({ user, onUpdate, dark }) {
 /* ── Stat Card ── */
 function StatCard({ label, val, color, dark }) {
   return (
-    <div className={`p-5 rounded-2xl border transition-colors duration-200
+    <div className={`p-6 rounded-3xl border transition-colors duration-200
       ${dark ? 'bg-[#0f0f1a] border-[#1c1c2e]' : 'bg-white border-slate-200 shadow-sm'}`}>
-      <div className={`text-[9px] uppercase tracking-widest font-bold mb-1.5
+      <div className={`text-[15px] uppercase tracking-widest font-bold mb-1.5
         ${dark ? 'text-slate-500' : 'text-slate-400'}`}>{label}</div>
       <div className="font-black text-2xl" style={{ color }}>{val}</div>
     </div>
   );
 }
 
+/* ── Pagination Button ── */
+function PageBtn({ children, active, disabled, onClick, dark }) {
+  return (
+    <button
+      disabled={disabled}
+      onClick={onClick}
+      className="transition-all duration-150"
+      style={{
+        fontFamily: 'inherit',
+        fontSize: 10,
+        fontWeight: 800,
+        letterSpacing: '0.1em',
+        minWidth: 34,
+        height: 34,
+        borderRadius: 8,
+        border: '1px solid',
+        cursor: disabled ? 'not-allowed' : 'pointer',
+        opacity: disabled ? 0.35 : 1,
+        background: active
+          ? '#f43f5e'
+          : dark ? 'transparent' : 'transparent',
+        borderColor: active
+          ? '#f43f5e'
+          : dark ? '#252538' : '#e2e8f0',
+        color: active
+          ? '#fff'
+          : dark ? '#64748b' : '#94a3b8',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      {children}
+    </button>
+  );
+}
+
+/* ── useDebounce ── */
+function useDebounce(value, delay = 400) {
+  const [debounced, setDebounced] = useState(value);
+  useEffect(() => {
+    const t = setTimeout(() => setDebounced(value), delay);
+    return () => clearTimeout(t);
+  }, [value, delay]);
+  return debounced;
+}
+
 const UserManagement = () => {
   const { dark } = useTheme();
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
-  const [search, setSearch] = useState('');
-  const [roleFilter, setRoleFilter] = useState('all');
-  const [toast, setToast] = useState({ show: false, msg: '', color: '' });
 
-  /* ── FETCH ── */
-  const { data: users = [], isLoading } = useQuery({
-    queryKey: ['users'],
+  // ── Pagination & filter state ──
+  const [page, setPage]           = useState(1);
+  const [limit, setLimit]         = useState(10);
+  const [search, setSearch]       = useState('');
+  const [roleFilter, setRoleFilter] = useState('all');
+  const [toast, setToast]         = useState({ show: false, msg: '', color: '' });
+
+  const debouncedSearch = useDebounce(search, 400);
+
+  // Reset to page 1 when filters change
+  const handleSearch = useCallback((val) => { setSearch(val); setPage(1); }, []);
+  const handleRole   = useCallback((val) => { setRoleFilter(val); setPage(1); }, []);
+  const handleLimit  = useCallback((val) => { setLimit(Number(val)); setPage(1); }, []);
+
+  /* ── FETCH (server-side pagination) ── */
+  const { data, isLoading } = useQuery({
+    queryKey: ['users', page, limit, debouncedSearch, roleFilter],
     queryFn: async () => {
-      const res = await axiosSecure.get('/users');
-      return res.data;
+      const params = new URLSearchParams({
+        page,
+        limit,
+        ...(debouncedSearch && { search: debouncedSearch }),
+        ...(roleFilter !== 'all' && { role: roleFilter }),
+      });
+      const res = await axiosSecure.get(`/users?${params}`);
+      return res.data; // { users, total, page, limit, totalPages }
     },
+    keepPreviousData: true,
   });
+
+  const users      = data?.users      ?? [];
+  const total      = data?.total      ?? 0;
+  const totalPages = data?.totalPages ?? 1;
 
   /* ── MUTATION ── */
   const { mutate: updateUser } = useMutation({
@@ -108,17 +179,25 @@ const UserManagement = () => {
     setTimeout(() => setToast(t => ({ ...t, show: false })), 3000);
   };
 
-  /* ── FILTER ── */
-  const filteredUsers = useMemo(() => {
-    return users.filter(u => {
-      const match = u.name?.toLowerCase().includes(search.toLowerCase()) || u.email?.toLowerCase().includes(search.toLowerCase());
-      const roleMatch = roleFilter === 'all' || u.role === roleFilter;
-      return match && roleMatch;
-    });
-  }, [users, search, roleFilter]);
+  /* ── Build page numbers to display ── */
+  const getPageNumbers = () => {
+    if (totalPages <= 7) return Array.from({ length: totalPages }, (_, i) => i + 1);
+    const pages = new Set([1, totalPages, page]);
+    if (page > 1) pages.add(page - 1);
+    if (page < totalPages) pages.add(page + 1);
+    const sorted = [...pages].sort((a, b) => a - b);
+    const result = [];
+    let prev = null;
+    for (const p of sorted) {
+      if (prev && p - prev > 1) result.push('...');
+      result.push(p);
+      prev = p;
+    }
+    return result;
+  };
 
   /* ── LOADING ── */
-  if (isLoading) return (
+  if (isLoading && !data) return (
     <div className="flex items-center justify-center h-64">
       <div className="w-10 h-10 border-4 border-rose-500 border-t-transparent rounded-full animate-spin" />
     </div>
@@ -159,7 +238,7 @@ const UserManagement = () => {
     <div className={`${C.page} font-mono relative pb-8 transition-colors duration-200`}>
 
       {/* Toast */}
-      <div className={`fixed bottom-8 right-8 z-9999 flex items-center gap-3 px-5 py-3 rounded-2xl shadow-2xl
+      <div className={`fixed bottom-8 right-8 z-50 flex items-center gap-3 px-5 py-3 rounded-2xl shadow-2xl
         border transition-all duration-500
         ${dark ? 'bg-[#141420] border-[#252538]' : 'bg-white border-slate-200 shadow-slate-200'}
         ${toast.show ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`}>
@@ -172,35 +251,32 @@ const UserManagement = () => {
         {/* ── Header ── */}
         <header className="flex flex-wrap items-end justify-between gap-6 mb-10">
           <div>
-            <div className="flex items-center gap-2 text-[10px] font-bold text-rose-500 uppercase tracking-[0.4em] mb-2">
-              <span>◈</span> System Control
-            </div>
-            <h1 className={`font-serif italic font-black text-4xl tracking-tight ${dark ? 'text-white' : 'text-slate-800'}`}>
-              User Registry
+            <h1 className={`font-serif font-black text-4xl tracking-tight ${dark ? 'text-white' : 'text-slate-800'}`}>
+              User <span className="text-rose-600">Management</span>
             </h1>
           </div>
-          <div className={`border rounded-2xl p-4 flex items-center gap-4 transition-colors duration-200
+          <div className={`border rounded-2xl p-3 flex items-center gap-4 transition-colors duration-200
             ${dark ? 'bg-[#0f0f1a] border-[#252538]' : 'bg-white border-slate-200 shadow-sm'}`}>
             <Users className="text-rose-500" size={20} />
             <div>
               <div className={`text-[9px] uppercase tracking-widest font-bold ${C.label}`}>Total Records</div>
-              <div className={`font-serif text-3xl font-black ${dark ? 'text-white' : 'text-slate-800'}`}>{users.length}</div>
+              <div className={`font-serif text-2xl font-black ${dark ? 'text-white' : 'text-slate-800'}`}>{total}</div>
             </div>
           </div>
         </header>
 
         {/* ── Stats ── */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
-          <StatCard dark={dark} label="Total"   val={users.length}                                color="#94a3b8" />
-          <StatCard dark={dark} label="Active"  val={users.filter(u => u.status === 'active').length}  color="#10b981" />
-          <StatCard dark={dark} label="Blocked" val={users.filter(u => u.status !== 'active').length}  color="#f43f5e" />
-          <StatCard dark={dark} label="Admins"  val={users.filter(u => u.role === 'admin').length}     color="#f59e0b" />
+          <StatCard dark={dark} label="Total"   val={total}                                        color="#94a3b8" />
+          <StatCard dark={dark} label="Page"    val={`${page} / ${totalPages}`}                   color="#10b981" />
+          <StatCard dark={dark} label="Showing" val={users.length}                                color="#f43f5e" />
+          <StatCard dark={dark} label="Per Page" val={limit}                                      color="#f59e0b" />
         </div>
 
         {/* ── Toolbar ── */}
         <div className="flex flex-wrap gap-3 mb-5">
           {/* Search */}
-          <div className={`flex-1 min-w-60 border rounded-xl px-4 py-3 flex items-center gap-3
+          <div className={`flex-1 min-w-60 border rounded-xl px-5 py-4 flex items-center gap-3
             focus-within:border-rose-500 transition-all duration-200
             ${dark ? 'bg-[#0f0f1a] border-[#252538]' : 'bg-white border-slate-200 shadow-sm'}`}>
             <Search size={14} className={C.subtext} />
@@ -209,17 +285,18 @@ const UserManagement = () => {
               placeholder="Search by name or email..."
               className={`bg-transparent border-none outline-none text-xs w-full placeholder:opacity-50
                 ${dark ? 'text-slate-200 placeholder:text-slate-600' : 'text-slate-700 placeholder:text-slate-400'}`}
-              onChange={e => setSearch(e.target.value)}
+              onChange={e => handleSearch(e.target.value)}
             />
           </div>
-          {/* Filter */}
+
+          {/* Role Filter */}
           <div className={`border rounded-xl px-4 py-3 flex items-center gap-3 transition-colors duration-200
             ${dark ? 'bg-[#0f0f1a] border-[#252538]' : 'bg-white border-slate-200 shadow-sm'}`}>
             <Filter size={14} className={C.subtext} />
             <select
               className={`bg-transparent border-none outline-none text-[10px] uppercase font-bold cursor-pointer
                 ${dark ? 'text-slate-300' : 'text-slate-600'}`}
-              onChange={e => setRoleFilter(e.target.value)}
+              onChange={e => handleRole(e.target.value)}
               style={{ background: C.selectBg }}
             >
               <option value="all"       style={{ background: C.selectBg }}>All Roles</option>
@@ -227,6 +304,23 @@ const UserManagement = () => {
               <option value="donor"     style={{ background: C.selectBg }}>Donor</option>
               <option value="volunteer" style={{ background: C.selectBg }}>Volunteer</option>
               <option value="admin"     style={{ background: C.selectBg }}>Admin</option>
+            </select>
+          </div>
+
+          {/* Per-page selector */}
+          <div className={`border rounded-xl px-4 py-3 flex items-center gap-3 transition-colors duration-200
+            ${dark ? 'bg-[#0f0f1a] border-[#252538]' : 'bg-white border-slate-200 shadow-sm'}`}>
+            <span className={`text-[10px] uppercase font-bold ${C.subtext}`}>Show</span>
+            <select
+              value={limit}
+              className={`bg-transparent border-none outline-none text-[10px] uppercase font-bold cursor-pointer
+                ${dark ? 'text-slate-300' : 'text-slate-600'}`}
+              onChange={e => handleLimit(e.target.value)}
+              style={{ background: C.selectBg }}
+            >
+              {PAGE_SIZE_OPTIONS.map(n => (
+                <option key={n} value={n} style={{ background: C.selectBg }}>{n}</option>
+              ))}
             </select>
           </div>
         </div>
@@ -247,21 +341,19 @@ const UserManagement = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredUsers.length === 0 ? (
+                {users.length === 0 ? (
                   <tr>
                     <td colSpan={4} className={`p-16 text-center text-[10px] uppercase tracking-widest font-bold ${C.subtext}`}>
                       — No records found —
                     </td>
                   </tr>
-                ) : filteredUsers.map((u, idx) => {
+                ) : users.map((u, idx) => {
                   const cfg = ROLE_CFG[u.role] || ROLE_CFG.user;
                   const isActive = u.status === 'active';
                   return (
                     <tr key={u._id}
                       className="transition-all group"
-                      style={{
-                        borderTop: idx !== 0 ? `1px solid ${C.cardBorder}` : 'none',
-                      }}
+                      style={{ borderTop: idx !== 0 ? `1px solid ${C.cardBorder}` : 'none' }}
                       onMouseEnter={e => e.currentTarget.style.background = C.rowHover}
                       onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
                     >
@@ -358,12 +450,37 @@ const UserManagement = () => {
             </table>
           </div>
 
-          {/* Table Footer */}
-          <div className="px-8 py-4 flex justify-between items-center border-t transition-colors duration-200"
+          {/* ── Table Footer / Pagination ── */}
+          <div className="px-8 py-5 flex flex-wrap justify-between items-center gap-4 border-t transition-colors duration-200"
             style={{ background: C.footerBg, borderColor: C.cardBorder }}>
+
+            {/* Info */}
             <span className={`text-[9px] font-bold uppercase tracking-widest ${C.label}`}>
-              Showing {filteredUsers.length} of {users.length} records
+              {total === 0
+                ? 'No records'
+                : `Showing ${(page - 1) * limit + 1}–${Math.min(page * limit, total)} of ${total} records`}
             </span>
+
+            {/* Page buttons */}
+            <div className="flex items-center gap-1.5">
+              {/* Prev */}
+              <PageBtn dark={dark} disabled={page === 1} onClick={() => setPage(p => p - 1)}>
+                <ChevronLeft size={13} />
+              </PageBtn>
+
+              {/* Numbered pages */}
+              {getPageNumbers().map((p, i) =>
+                p === '...'
+                  ? <span key={`ellipsis-${i}`} className={`px-1 text-[10px] ${C.label}`}>…</span>
+                  : <PageBtn key={p} dark={dark} active={p === page} onClick={() => setPage(p)}>{p}</PageBtn>
+              )}
+
+              {/* Next */}
+              <PageBtn dark={dark} disabled={page === totalPages || totalPages === 0} onClick={() => setPage(p => p + 1)}>
+                <ChevronRight size={13} />
+              </PageBtn>
+            </div>
+
             <span className={`text-[9px] font-bold uppercase tracking-widest ${C.label}`}>◈ Authorized Access Only</span>
           </div>
         </div>
