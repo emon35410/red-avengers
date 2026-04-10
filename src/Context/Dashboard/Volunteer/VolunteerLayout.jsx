@@ -1,6 +1,9 @@
 import {
-  LayoutDashboard, HeartPulse, MapPin,
-  ClipboardList, Users, Bell, User,
+  LayoutDashboard,
+  ClipboardList, Users, User,
+  AlertCircle,
+  Droplet,
+  HeartPulse,
 } from "lucide-react";
 import BaseLayout from "../../../Layouts/BaseLayout";
 
@@ -11,17 +14,15 @@ const VOLUNTEER_NAV = [
   {
     items: [
       { to: "/dashboard", icon: LayoutDashboard, label: "Dashboard" },
-      { to: "/dashboard/drives", icon: MapPin, label: "Blood Drives" },
-      {
-        to: "/dashboard/tasks",
-        icon: ClipboardList,
-        label: "My Tasks",
-        badge: "3"
-      },
       { to: "/dashboard/donors", icon: Users, label: "Assigned Donors" },
-      { to: "/dashboard/requests", icon: HeartPulse, label: "Blood Requests" },
+    {to: "/dashboard/request",icon: AlertCircle,label: "Request Blood",},
+     {
+        to: "/dashboard/history",
+        icon: Droplet,
+        label: "Donation History"
+      },
+      { to: "/dashboard/my-requests", icon: HeartPulse, label: "My Requests" },
       { to: "/dashboard/inventory", icon: ClipboardList, label: "Blood Inventory" },
-      { to: "/dashboard/notices", icon: Bell, label: "Notices" },
       { to: "/dashboard/profile", icon: User, label: "My Profile" },
     ],
   },

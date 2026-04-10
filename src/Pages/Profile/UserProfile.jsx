@@ -1,21 +1,37 @@
 import React from 'react';
-import { LayoutGrid, Info } from 'lucide-react';
+import { ShieldCheck, Users, AlertCircle } from 'lucide-react';
 
-const UserProfile = ({ user, dark }) => (
-    <div className="space-y-6">
-        <div className="grid grid-cols-2 gap-4">
-            <div className={`p-6 rounded-2xl border ${dark ? 'bg-[#0b0b14] border-[#1c1c2e]' : 'bg-slate-50 border-slate-100'}`}>
-                <div className="text-2xl font-black text-slate-500 mb-1">02</div>
-                <div className="text-[9px] font-black uppercase tracking-widest opacity-40">Joined Events</div>
+const AdminProfile = ({ dark }) => {
+    return (
+        <div className="space-y-4">
+            <div className={`p-4 rounded-2xl border ${dark ? 'bg-white/5 border-white/5' : 'bg-slate-50 border-slate-100'}`}>
+                <div className="flex items-center gap-3">
+                    <ShieldCheck className="text-amber-500" size={20} />
+                    <div>
+                        <p className="text-[10px] font-black uppercase tracking-widest opacity-50">Admin Clearance</p>
+                        <p className="text-sm font-bold">Level 10 - Full Access</p>
+                    </div>
+                </div>
             </div>
-            <div className={`p-6 rounded-2xl border ${dark ? 'bg-[#0b0b14] border-[#1c1c2e]' : 'bg-slate-50 border-slate-100'}`}>
-                <div className="text-2xl font-black text-slate-500 mb-1">Level 1</div>
-                <div className="text-[9px] font-black uppercase tracking-widest opacity-40">Member Tier</div>
+
+            <div className="grid grid-cols-2 gap-3">
+                <div className={`p-4 rounded-2xl border ${dark ? 'bg-white/5 border-white/5' : 'bg-slate-50 border-slate-100'}`}>
+                    <Users className="text-blue-500 mb-2" size={18} />
+                    <p className="text-lg font-black italic">Active</p>
+                    <p className="text-[9px] uppercase font-bold opacity-40">System Monitor</p>
+                </div>
+                <div className={`p-4 rounded-2xl border ${dark ? 'bg-white/5 border-white/5' : 'bg-slate-50 border-slate-100'}`}>
+                    <AlertCircle className="text-rose-500 mb-2" size={18} />
+                    <p className="text-lg font-black italic">Normal</p>
+                    <p className="text-[9px] uppercase font-bold opacity-40">Server Status</p>
+                </div>
             </div>
+            
+            <p className="text-[9px] text-center font-bold opacity-30 uppercase tracking-tighter">
+                Admin dashboard access enabled via sidebar
+            </p>
         </div>
-        <div className={`p-6 rounded-2xl border-l-4 border-slate-400 italic text-xs ${dark ? 'bg-slate-400/5 text-slate-400' : 'bg-slate-50 text-slate-600'}`}>
-            "Complete your profile to start donating and joining missions."
-        </div>
-    </div>
-);
-export default UserProfile;
+    );
+};
+
+export default AdminProfile;

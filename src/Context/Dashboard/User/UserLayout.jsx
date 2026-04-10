@@ -1,6 +1,5 @@
 import {
-    LayoutDashboard, Droplet, AlertCircle,
-    MapPin, Bell, User, HeartPulse,
+    LayoutDashboard, Droplet, AlertCircle, User, HeartPulse,
 } from "lucide-react";
 import BaseLayout from "../../../Layouts/BaseLayout";
 
@@ -14,13 +13,10 @@ const USER_NAV = [
             {
                 to: "/dashboard/request",
                 icon: AlertCircle,
-                label: "Request Blood",
-                badge: "New"
+                label: "Request Blood"
             },
-            { to: "/dashboard/find-donors", icon: Droplet, label: "Find Donors" },
-            { to: "/dashboard/drives", icon: MapPin, label: "Nearby Drives" },
+            { to: "/finddonor", icon: Droplet, label: "Find Donors" },
             { to: "/dashboard/my-requests", icon: HeartPulse, label: "My Requests" },
-            { to: "/dashboard/notices", icon: Bell, label: "Notices" },
             { to: "/dashboard/profile", icon: User, label: "My Profile" },
         ],
     },

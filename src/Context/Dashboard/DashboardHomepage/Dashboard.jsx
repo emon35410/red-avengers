@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import useRole from "../../../Hooks/useRole";
-import { useTheme } from "../../../Layouts/BaseLayout";
 import AdminDashboard from "./AdminDashboard";
 import DonorDashboard from "./DonorDashboard";
 import UserDashboard from "./UserDashboard";
 import VolunteerDashboard from "./VolunteerDashboard";
+import { useTheme } from "../../ThemeContext ";
 
 const Dashboard = () => {
   const { dark } = useTheme();
@@ -15,13 +15,13 @@ const Dashboard = () => {
     if (role) {
       console.log("Current User Role:", role);
     }
-  }, [role]); 
+  }, [role]);
 
   // Loading state-e ekta clean view rakho
   if (roleLoading) {
     return (
-      <div className={`flex items-center justify-center min-h-100 ${dark ? 'text-white' : 'text-slate-800'}`}>
-        <div className="w-6 h-6 border-2 border-rose-500 border-t-transparent rounded-full animate-spin" />
+      <div className="flex items-center justify-center h-64">
+        <div className="w-10 h-10 border-4 border-rose-500 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -29,10 +29,14 @@ const Dashboard = () => {
   // Render logic - switch case use kora ektu cleaner
   const renderDashboard = () => {
     switch (role) {
-      case "admin":     return <AdminDashboard dark={dark} />;
-      case "donor":     return <DonorDashboard dark={dark} />;
-      case "volunteer": return <VolunteerDashboard dark={dark} />;
-      default:          return <UserDashboard dark={dark} />;
+      case "admin":
+        return <AdminDashboard dark={dark} />;
+      case "donor":
+        return <DonorDashboard dark={dark} />;
+      case "volunteer":
+        return <VolunteerDashboard dark={dark} />;
+      default:
+        return <UserDashboard dark={dark} />;
     }
   };
 

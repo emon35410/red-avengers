@@ -46,7 +46,7 @@ const FindDonor = () => {
               <div className="w-8 h-0.5 bg-rose-600" />
               <span className="text-[10px] font-black text-rose-600 uppercase tracking-[0.3em]">Donor Network</span>
             </div>
-            <h1 className="text-4xl md:text-5xl font-black italic text-slate-900 dark:text-white leading-none tracking-tighter">
+            <h1 className="text-3xl md:text-4xl font-black italic text-slate-900 dark:text-white leading-none tracking-tighter">
               FIND A <span className="text-rose-600 underline decoration-rose-600/20">DONOR.</span>
             </h1>
             <p className="mt-4 text-slate-500 dark:text-slate-400 text-sm">

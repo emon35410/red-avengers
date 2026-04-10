@@ -5,7 +5,7 @@ import { Send, Activity, ShieldAlert, Rocket } from 'lucide-react';
 import toast from 'react-hot-toast';
 import useAuth from '../../../Hooks/useAuth';
 import useAxiosPublic from '../../../Hooks/useAxiosPublic';
-import { useTheme } from '../../../Layouts/BaseLayout';
+import { useTheme } from '../../../Context/ThemeContext ';
 
 const AddCamp = () => {
     const { user } = useAuth();
