@@ -1,31 +1,24 @@
 import React, { useState, useEffect, useRef } from 'react';
 import logo from "../assets/Red-Avengers-logo.webp";
-import { Link, NavLink } from 'react-router'; // NavLink add kora hoyeche
+import { Link, NavLink } from 'react-router'; 
 import useAuth from '../Hooks/useAuth';
 import { LayoutDashboard, LogOut, Sun, Moon, Menu, X } from 'lucide-react';
+import { useTheme } from '../Context/ThemeContext ';
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const profileRef = useRef(null);
-  const { user, logOut } = useAuth();
   
-  const [isDarkMode, setIsDarkMode] = useState(() => {
-    return localStorage.getItem('theme') === 'dark' || !('theme' in localStorage);
-  });
+  // --- Central Theme Context ---
+  // Tor Navbar ekhon direct central state use korbe
+  const { dark, toggleTheme } = useTheme(); 
+  const { user, logOut } = useAuth();
 
   const defaultAvatar = "https://ui-avatars.com/api/?name=Avenger&background=e11d48&color=fff";
 
-  useEffect(() => {
-    const root = window.document.documentElement;
-    if (isDarkMode) {
-      root.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      root.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    }
-  }, [isDarkMode]);
+  // Note: localStorage ar root class manipulation ekhon central ThemeProvider-e thaka bhalo.
+  // Kintu tui ekhane ThemeProvider use korle tor local state check korar dorkar nai.
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -51,9 +44,8 @@ const Navbar = () => {
       .catch(error => console.log(error));
   };
 
-  // Active Link Styling Function
   const getLinkStyles = ({ isActive }) => `
-    relative px-4 py-2 rounded-xl text-xs font-black uppercase 
+    relative px-4 py-2 rounded-xl text-sm font-black uppercase 
     ${isActive 
       ? "text-rose-600 dark:text-rose-500 bg-rose-500/10 shadow-[0_0_25px_rgba(225,29,72,0.15)] ring-1 ring-rose-500/20" 
       : "text-slate-600 dark:text-slate-400 hover:text-rose-500 hover:bg-rose-500/5"
@@ -76,7 +68,7 @@ const Navbar = () => {
           </div>
           <div className="flex flex-col">
             <span className="text-rose-600 dark:text-rose-500 font-black tracking-tighter text-lg leading-none italic uppercase">
-              Red <span className="text-green-600 dark:text-white transition-colors">Avengers</span>
+              Red <span className="text-green-600  transition-colors">Avengers</span>
             </span>
           </div>
         </Link>
@@ -90,7 +82,6 @@ const Navbar = () => {
                 {({ isActive }) => (
                   <>
                     {link.name}
-                    {/* Active Underglow Dot */}
                     <span className={`absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-rose-600 transition-all duration-500
                       ${isActive ? "opacity-100 scale-100" : "opacity-0 scale-0 group-hover:opacity-40"}`} 
                     />
@@ -100,12 +91,13 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* --- Theme Toggle --- */}
+          {/* --- Theme Toggle (Fixed Logic) --- */}
           <button
-            onClick={() => setIsDarkMode(!isDarkMode)}
+            onClick={toggleTheme} // Direct Context er toggle call korbe
             className="p-2.5 rounded-2xl bg-slate-100 dark:bg-[#0c0c14] text-slate-600 dark:text-rose-500 border border-slate-200 dark:border-zinc-800/50 transition-all hover:ring-2 hover:ring-rose-500/30"
           >
-            {isDarkMode ? <Sun size={18} className="text-amber-400" /> : <Moon size={18} />}
+            {/* dark variable use hobe ekhon */}
+            {dark ? <Sun size={18} className="text-amber-400" /> : <Moon size={18} />}
           </button>
 
           {/* --- User Auth Section --- */}
@@ -124,7 +116,6 @@ const Navbar = () => {
                 </div>
               </button>
 
-              {/* Dropdown Menu */}
               {isProfileOpen && (
                 <div className="absolute top-14 right-0 w-56 bg-white dark:bg-[#0c0c14] border border-slate-200 dark:border-rose-900/20 rounded-3xl shadow-2xl py-3 z-50 animate-in fade-in slide-in-from-top-4 duration-300">
                   <div className="px-5 py-3 border-b border-slate-100 dark:border-zinc-800/50 mb-2">

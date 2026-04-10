@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Droplet, MapPin, Phone, ShieldCheck, ArrowRight } from 'lucide-react';
+import { Droplet, MapPin, Phone, ShieldCheck, ArrowRight, Weight } from 'lucide-react'; // Weight আইকন অ্যাড করা হয়েছে
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router';
 import { motion } from 'framer-motion'; 
@@ -36,10 +36,17 @@ const BecomeDonor = () => {
     }, [user, axiosPublic]);
 
     const onSubmit = async (data) => {
+        // --- ওজন চেক করার লজিক ---
+        const userWeight = parseFloat(data.weight);
+        if (userWeight < 50) {
+            return toast.error("Sorry! You must weigh at least 50kg to donate blood.");
+        }
+
         try {
             setLoading(true);
             const donorData = {
                 ...data,
+                weight: userWeight, // ডাটাবেজে নাম্বার হিসেবে সেভ হবে
                 isDonor: true,
                 role: 'donor',
                 status: 'active'
@@ -58,7 +65,6 @@ const BecomeDonor = () => {
         }
     };
 
-    // loading state
     if (isFetching) {
         return (
             <div className="flex flex-col items-center justify-center py-20">
@@ -68,7 +74,6 @@ const BecomeDonor = () => {
         );
     }
 
-    // duplicate donor prevention
     if (dbUser?.isDonor || dbUser?.role === 'donor') {
         return (
             <motion.div 
@@ -91,7 +96,6 @@ const BecomeDonor = () => {
         );
     }
 
-    // main form
     return (
         <motion.div 
             initial={{ opacity: 0, scale: 0.95 }}
@@ -102,7 +106,7 @@ const BecomeDonor = () => {
             <div className="text-center mb-10">
                 <div className="inline-flex items-center px-4 py-1.5 bg-rose-500/10 rounded-full mb-4 border border-rose-500/20">
                     <ShieldCheck className="w-4 h-4 text-rose-600 mr-2" />
-                    <span className="text-rose-600 font-black uppercase text-[10px] tracking-[0.2em]">Join the Avengers</span>
+                    <span className="text-rose-600 font-black uppercase text-[10px] tracking-[0.2em]">Safety Guidelines Apply</span>
                 </div>
                 <h2 className="text-3xl font-black dark:text-white uppercase italic tracking-tighter">
                     Complete Your <span className="text-rose-600">Hero Profile</span>
@@ -111,6 +115,7 @@ const BecomeDonor = () => {
 
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Blood Group */}
                     <div className="space-y-1">
                         <label className="text-[10px] font-black uppercase text-slate-400 ml-2">Blood Group</label>
                         <div className="relative">
@@ -125,6 +130,23 @@ const BecomeDonor = () => {
                         </div>
                     </div>
 
+                    {/* Weight Field (New) */}
+                    <div className="space-y-1">
+                        <label className="text-[10px] font-black uppercase text-slate-400 ml-2">Weight (KG)</label>
+                        <div className="relative">
+                            <Weight className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                            <input
+                                type="number"
+                                {...register('weight', { required: true, min: 1 })}
+                                placeholder="Min 50 KG"
+                                className="w-full pl-14 pr-6 py-4 bg-slate-50 dark:bg-slate-950/50 border border-slate-200 dark:border-white/5 rounded-2xl outline-none focus:border-rose-500 dark:text-white font-medium"
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Phone */}
                     <div className="space-y-1">
                         <label className="text-[10px] font-black uppercase text-slate-400 ml-2">Contact No</label>
                         <div className="relative">
@@ -137,31 +159,31 @@ const BecomeDonor = () => {
                             />
                         </div>
                     </div>
-                </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* District */}
                     <div className="space-y-1">
                         <label className="text-[10px] font-black uppercase text-slate-400 ml-2">District</label>
                         <div className="relative">
                             <MapPin className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
                             <input
                                 {...register('district', { required: true })}
-                                placeholder="e.g. Dhaka"
+                                placeholder="e.g. Sylhet"
                                 className="w-full pl-14 pr-6 py-4 bg-slate-50 dark:bg-slate-950/50 border border-slate-200 dark:border-white/5 rounded-2xl outline-none focus:border-rose-500 dark:text-white font-medium"
                             />
                         </div>
                     </div>
+                </div>
 
-                    <div className="space-y-1">
-                        <label className="text-[10px] font-black uppercase text-slate-400 ml-2">Upazila</label>
-                        <div className="relative">
-                            <MapPin className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-                            <input
-                                {...register('upazila', { required: true })}
-                                placeholder="e.g. Mirpur"
-                                className="w-full pl-14 pr-6 py-4 bg-slate-50 dark:bg-slate-950/50 border border-slate-200 dark:border-white/5 rounded-2xl outline-none focus:border-rose-500 dark:text-white font-medium"
-                            />
-                        </div>
+                {/* Upazila */}
+                <div className="space-y-1">
+                    <label className="text-[10px] font-black uppercase text-slate-400 ml-2">Upazila</label>
+                    <div className="relative">
+                        <MapPin className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                        <input
+                            {...register('upazila', { required: true })}
+                            placeholder="e.g. Beanibazar"
+                            className="w-full pl-14 pr-6 py-4 bg-slate-50 dark:bg-slate-950/50 border border-slate-200 dark:border-white/5 rounded-2xl outline-none focus:border-rose-500 dark:text-white font-medium"
+                        />
                     </div>
                 </div>
 

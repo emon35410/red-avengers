@@ -3,94 +3,152 @@ import Aos from 'aos';
 import 'aos/dist/aos.css';
 import { Link } from 'react-router';
 
+const stats = [
+  { val: '5.2K+',  label: 'Heroes Enrolled' },
+  { val: '12K+',   label: 'Lives Impacted'  },
+  { val: '14 MIN', label: 'Avg. Response'   },
+];
+
 const Banner = () => {
   useEffect(() => {
-    Aos.init({
-      duration: 1000,
-      once: true,
-      easing: 'ease-out-quad',
-    });
+    Aos.init({ duration: 900, once: true, easing: 'ease-out-cubic' });
   }, []);
 
   return (
-    <div className="relative min-h-screen md:h-screen w-full overflow-hidden bg-slate-950 flex items-center">
+    <div className="relative min-h-screen w-full overflow-hidden bg-neutral-950 flex items-center justify-center">
 
-      {/*Background Image */}
-      <div className="absolute inset-0 overflow-hidden bg-slate-950">
+      {/* ── Background Image ── */}
+      <div className="absolute inset-0">
         <div
-          className="absolute inset-0 bg-cover bg-center md:bg-position-[center_top_20%] transition-transform duration-1000 ease-out hover:scale-105 opacity-60"
+          className="absolute inset-0 bg-cover bg-position-[center_20%] opacity-20 scale-105"
           style={{
-            backgroundImage: "url(https://sanguina.com/cdn/shop/articles/230614_BloodDonation_Blog_cover_f481aeb3-af3c-4a20-8982-a11c2171a71c.jpg?v=1745344749&width=1000)",
+            backgroundImage:
+              "url('https://sanguina.com/cdn/shop/articles/230614_BloodDonation_Blog_cover_f481aeb3-af3c-4a20-8982-a11c2171a71c.jpg?v=1745344749&width=1000')",
           }}
+        />
+        {/* Vignette */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_50%,transparent_30%,#0a0a0a_90%)]" />
+      </div>
+
+      {/* ── Top accent bar ── */}
+      <div className="absolute top-0 inset-x-0 h-px bg-linear-to-r from-transparent via-rose-600 to-transparent" />
+
+      {/* ── Corner marks ── */}
+      <div className="absolute top-5 left-5 w-5 h-5 border-t border-l border-rose-700/40" />
+      <div className="absolute top-5 right-5 w-5 h-5 border-t border-r border-rose-700/40" />
+      <div className="absolute bottom-5 left-5 w-5 h-5 border-b border-l border-rose-700/40" />
+      <div className="absolute bottom-5 right-5 w-5 h-5 border-b border-r border-rose-700/40" />
+
+      {/* ── Content ── */}
+      <div className="relative z-10 w-full max-w-3xl mx-auto px-6 md:px-10 py-10 flex flex-col items-center text-center">
+
+        {/* Badge */}
+        <div
+          data-aos="fade-down"
+          className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-rose-950/40 border border-rose-800/40 mb-10"
         >
-          {/* Gradient Overlay*/}
-          <div className="absolute inset-0 bg-linear-to-b from-slate-950/80 via-slate-950/40 to-slate-950"></div>
-
-          {/* Extra tint for text legibility */}
-          <div className="absolute inset-0 bg-slate-950/60 backdrop-blur-[1px]"></div>
+          <span className="relative flex w-2 h-2">
+            <span className="animate-ping absolute inset-0 rounded-full bg-rose-500 opacity-75" />
+            <span className="relative rounded-full w-2 h-2 bg-rose-500" />
+          </span>
+          <span className="text-[10px] font-bold tracking-[0.22em] uppercase text-rose-400">
+            Blood Avengers Network &nbsp;·&nbsp; Online
+          </span>
         </div>
-      </div>
 
-      {/* 2. Content Area */}
-      <div className="relative z-10 w-full pt-24 pb-12 md:py-0 px-6 text-center">
-        <div className="max-w-6xl mx-auto flex flex-col items-center">
+        {/* Eyebrow */}
+        <p
+          data-aos="fade-up"
+          className="text-[10px] font-bold tracking-[0.3em] uppercase text-rose-500 mb-4"
+        >
+          Donate · Connect · Save Lives
+        </p>
 
-          {/* Status Badge  */}
-          <div data-aos="fade-down" className="inline-flex items-center gap-3 px-4 py-1.5 md:px-5 md:py-2 bg-white/3 backdrop-blur-xl rounded-full border border-white/8 mb-6 md:mb-10">
-            <span className="flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-500 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-rose-600"></span>
-            </span>
-            <span className="text-slate-300 font-heading text-[10px] md:text-[11px] font-bold uppercase tracking-[0.2em] md:tracking-[0.3em]">
-              Blood Avengers Network • Online
-            </span>
-          </div>
+        {/* Headline */}
+        <h1
+          data-aos="fade-up"
+          data-aos-delay="150"
+          className="text-[clamp(50px,10vw,80px)] font-black leading-[0.9] tracking-tight uppercase text-white"
+        >
+          Unleash<br />
+          The{' '}
+          <span className="text-transparent bg-clip-text bg-linear-to-br from-rose-500 to-red-700">
+            Hero
+          </span>
+          <br />
+          Within
+        </h1>
 
-          {/* Heading */}
-          <div data-aos="fade-up" data-aos-delay="200" className="mb-8 md:mb-10">
-            <h1 className="font-heading text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[1.1] md:leading-[0.9] tracking-tighter italic">
-              UNLEASH THE <br />
-              <span className="text-transparent bg-clip-text bg-linear-to-br from-rose-500 via-red-600 to-rose-800">
-                HERO WITHIN
-              </span>
-            </h1>
-            <p className="mt-4 md:mt-8 text-slate-400 font-sans text-sm md:text-xl max-w-2xl mx-auto leading-relaxed font-light">
-              Every drop is a superpower. The <span className="text-rose-500 font-semibold">Red Avengers</span> network bridges the gap between donors and lives in need.
-            </p>
-          </div>
-          <div data-aos="zoom-in" data-aos-delay="400" className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6 mb-10 md:mb-14 w-full max-w-4xl">
-            {[
-              { label: 'Heroes Enrolled', val: '5.2k+' },
-              { label: 'Lives Impacted', val: '12k+' },
-              { label: 'Avg. Response', val: '14 MIN', mobileFull: true }
-            ].map((item, i) => (
-              <div
-                key={i}
-                className={`group relative bg-white/2  border border-white/5 p-4 md:p-6 rounded-2xl md:rounded-3xl transition-all duration-500 ${item.mobileFull ? 'col-span-2 md:col-span-1' : 'col-span-1'}`}
-              >
-                <div className="text-2xl md:text-3xl font-black font-heading text-white mb-1 group-hover:text-rose-500 transition-colors">
-                  {item.val}
-                </div>
-                <div className="text-slate-500 text-[9px] md:text-[10px] font-bold uppercase tracking-widest">
-                  {item.label}
-                </div>
+        {/* Divider */}
+        <div
+          data-aos="zoom-in"
+          data-aos-delay="300"
+          className="w-10 h-px bg-linear-to-r from-rose-600 to-red-800 mx-auto my-8"
+        />
+
+        {/* Sub-text */}
+        <p
+          data-aos="fade-up"
+          data-aos-delay="350"
+          className="text-neutral-400 font-light leading-relaxed max-w-lg mb-14 text-base md:text-lg"
+        >
+          Every drop is a{' '}
+          <span className="text-neutral-300 font-normal">superpower</span>. The Blood
+          Avengers network bridges the gap between{' '}
+          <span className="text-neutral-300 font-normal">donors</span> and lives in
+          critical need — fast.
+        </p>
+
+        {/* Stats */}
+        <div
+          data-aos="fade-up"
+          data-aos-delay="500"
+          className="w-full max-w-2xl mb-14 grid grid-cols-3 border border-white/6 rounded-sm overflow-hidden"
+        >
+          {stats.map((s, i) => (
+            <div
+              key={i}
+              className={`group py-8 px-4 bg-white/2 hover:bg-white/5 transition-colors duration-300 cursor-default ${
+                i < 2 ? 'border-r border-white/6' : ''
+              }`}
+            >
+              <div className="text-3xl md:text-4xl font-black text-white group-hover:text-rose-500 transition-colors duration-300 mb-1 tracking-tight">
+                {s.val}
               </div>
-            ))}
-          </div>
-          <div data-aos="fade-up" data-aos-delay="600" className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6 w-full sm:w-auto">
-            <Link to="/become-donor" className="group relative w-full sm:w-auto px-5 md:px-6 py-4 md:py-4 bg-rose-600 rounded-xl md:rounded-2xl transition-all duration-300 hover:bg-rose-700 hover:shadow-[0_0_40px_rgba(225,29,72,0.4)] active:scale-95">
-              <span className="font-heading font-black text-white tracking-widest text-xs md:text-sm flex items-center justify-center gap-2">
-                Become A Donor <span className="transition-transform group-hover:translate-x-2">→</span>
-              </span>
-            </Link>
-
-            <Link to="/finddonor" className="w-full sm:w-auto px-5 md:px-8 py-4 md:py-4 bg-white/5 backdrop-blur-md border border-slate-700 hover:border-slate-400 rounded-xl md:rounded-2xl transition-all duration-300 font-heading font-bold text-slate-300 text-xs md:text-sm tracking-widest">
-              SEARCH DONORS
-            </Link>
-          </div>
-
+              <div className="text-[9px] font-bold tracking-[0.2em] uppercase text-neutral-400">
+                {s.label}
+              </div>
+            </div>
+          ))}
         </div>
+
+        {/* CTA Buttons */}
+        <div
+          data-aos="fade-up"
+          data-aos-delay="650"
+          className="flex flex-col sm:flex-row items-center justify-center gap-4"
+        >
+          <Link
+            to="/become-donor"
+            className="group inline-flex items-center gap-3 px-10 py-4 bg-rose-700 hover:bg-rose-600 text-white font-bold text-[11px] tracking-[0.2em] uppercase rounded-sm transition-all duration-300 hover:shadow-[0_12px_40px_rgba(225,29,72,0.3)] hover:-translate-y-0.5 active:translate-y-0"
+          >
+            Become a Donor
+            <span className="transition-transform duration-300 group-hover:translate-x-1.5">→</span>
+          </Link>
+
+          <Link
+            to="/finddonor"
+            className="inline-flex items-center gap-3 px-10 py-4 border border-white/15 hover:border-rose-700/60 text-neutral-300 hover:text-white font-bold text-[11px] tracking-[0.2em] uppercase rounded-sm transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0"
+          >
+            Search Donors
+          </Link>
+        </div>
+
       </div>
+
+      {/* ── Bottom accent bar ── */}
+      <div className="absolute bottom-0 inset-x-0 h-px bg-linear-to-r from-transparent via-rose-900 to-transparent" />
+
     </div>
   );
 };
