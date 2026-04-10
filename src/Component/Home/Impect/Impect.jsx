@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Users, Droplet, MapPin, Award, TrendingUp, Heart } from 'lucide-react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { Link } from 'react-router';
 
 export function Impect() {
   useEffect(() => {
@@ -148,12 +149,12 @@ export function Impect() {
               Will you answer the call today?
             </p>
             <div className="flex flex-col sm:flex-row gap-5 justify-center">
-              <button className="bg-white text-rose-600 px-10 py-4 rounded-2xl font-black text-sm tracking-[0.2em] uppercase hover:bg-slate-50 transition-all active:scale-95 shadow-lg">
+              <Link to="/become-donor" className="bg-white text-rose-600 px-10 py-4 rounded-2xl font-black text-sm tracking-[0.2em] uppercase hover:bg-slate-50 transition-all active:scale-95 shadow-lg">
                 JOIN THE SQUAD
-              </button>
-              <button className="border-2 border-white/40 text-white px-10 py-4 rounded-2xl font-black text-sm tracking-[0.2em] uppercase hover:bg-white/10 transition-all active:scale-95">
+              </Link>
+              <Link to="/support" className="border-2 border-white/40 text-white px-10 py-4 rounded-2xl font-black text-sm tracking-[0.2em] uppercase hover:bg-white/10 transition-all active:scale-95">
                 DONATE NOW
-              </button>
+              </Link>
             </div>
           </div>
         </div>

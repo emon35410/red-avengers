@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, createContext, useContext } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Outlet, NavLink, useNavigate, Link } from "react-router"; 
 import {
   Droplet, LogOut, Bell, Sun, Moon, Menu, X,
@@ -6,26 +6,22 @@ import {
 } from "lucide-react";
 import useAuth from "../Hooks/useAuth";
 import logo from "../assets/Red-Avengers-logo.webp";
-
-// Theme Context
-const ThemeContext = createContext();
-export const useTheme = () => useContext(ThemeContext);
+import { useTheme } from "../Context/ThemeContext ";
 
 const INITIAL_NOTIFICATIONS = [
-  { id: 1, type: "info",    title: "New admission request",    desc: "Arif Hossain submitted an application.", time: "2m ago",    read: false },
-  { id: 2, type: "success", title: "Application approved",     desc: "Sadia Islam has been enrolled.",         time: "18m ago", read: false },
+  { id: 1, type: "info",     title: "New admission request",    desc: "Arif Hossain submitted an application.", time: "2m ago",    read: false },
+  { id: 2, type: "success", title: "Application approved",      desc: "Sadia Islam has been enrolled.",         time: "18m ago", read: false },
   { id: 3, type: "warning", title: "Pending review",           desc: "3 applications awaiting approval.",      time: "1h ago",  read: false },
-  { id: 4, type: "info",    title: "Teacher account created",  desc: "Mr. Kamal joined as a new teacher.",     time: "3h ago",  read: true  },
+  { id: 4, type: "info",     title: "Teacher account created",  desc: "Mr. Kamal joined as a new teacher.",     time: "3h ago",  read: true  },
   { id: 5, type: "success", title: "DB backup complete",       desc: "Automatic backup finished successfully.", time: "5h ago",  read: true  },
 ];
 
 const NOTIF_STYLE = {
-  info:    { icon: <Info size={13} />,          dot: "bg-sky-400",     iconBg: "bg-sky-500/10 text-sky-400",         border: "border-sky-500/20"      },
+  info:     { icon: <Info size={13} />,           dot: "bg-sky-400",     iconBg: "bg-sky-500/10 text-sky-400",         border: "border-sky-500/20"      },
   success: { icon: <CheckCheck size={13} />,    dot: "bg-emerald-400", iconBg: "bg-emerald-500/10 text-emerald-400", border: "border-emerald-500/20" },
   warning: { icon: <AlertTriangle size={13} />, dot: "bg-amber-400",   iconBg: "bg-amber-500/10 text-amber-400",     border: "border-amber-500/20"    },
 };
 
-// Real-time Clock Hook
 function useClock() {
   const [now, setNow] = useState(new Date());
   useEffect(() => {
@@ -151,7 +147,9 @@ const SidebarNav = ({ navSections, dark }) => (
 );
 
 export default function BaseLayout({ navSections = [], roleLabel = "User" }) {
-  const [dark, setDark]               = useState(true);
+  // --- Central Context Call ---
+  const { dark, toggleTheme } = useTheme(); // 👈 Local 'dark' state delete kore eita add kora holo
+  
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [notifOpen, setNotifOpen]     = useState(false);
   const [notifications, setNotifications] = useState(INITIAL_NOTIFICATIONS);
@@ -177,7 +175,6 @@ export default function BaseLayout({ navSections = [], roleLabel = "User" }) {
   const dateStr = now.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric", year: "numeric" });
 
   return (
-    <ThemeContext.Provider value={{ dark, toggle: () => setDark(d => !d) }}>
       <div className={`flex h-screen overflow-hidden transition-colors duration-300 font-sans ${dark ? "bg-[#06060e]" : "bg-slate-50"}`}>
 
         {/* Mobile backdrop */}
@@ -202,7 +199,7 @@ export default function BaseLayout({ navSections = [], roleLabel = "User" }) {
                 </div>
               </div>
               <div className="flex flex-col">
-                <p className="text-sm font-black leading-none tracking-tight text-red-500">
+                <p className="text-sm font-black leading-none tracking-tight text-red-500 uppercase">
                   RED <span className="text-green-500 italic">AVENGERS</span>
                 </p>
               </div>
@@ -235,7 +232,6 @@ export default function BaseLayout({ navSections = [], roleLabel = "User" }) {
         {/* ── MAIN COLUMN ───────────────────────────────────── */}
         <div className="flex-1 flex flex-col overflow-hidden min-w-0">
           
-          {/* NAVBAR */}
           <header className={`shrink-0 border-b backdrop-blur-md z-40 ${dark ? "bg-[#0c0c14]/90 border-zinc-800/50" : "bg-white/90 border-slate-200"}`}>
             <div className="flex items-center justify-between px-4 xl:px-8 h-16 gap-4">
               <div className="flex items-center gap-4">
@@ -252,7 +248,11 @@ export default function BaseLayout({ navSections = [], roleLabel = "User" }) {
               </div>
 
               <div className="flex items-center gap-2.5">
-                <button onClick={() => setDark(!dark)} className={`w-10 h-10 rounded-xl border flex items-center justify-center transition-all active:scale-95 ${dark ? "bg-zinc-800 border-zinc-700 text-amber-400 hover:bg-zinc-700" : "bg-slate-100 border-slate-200 text-slate-500 hover:bg-slate-200"}`}>
+                {/* --- Dark Mode Toggle Connect --- */}
+                <button 
+                  onClick={toggleTheme} // 👈 toggle function use kora holo
+                  className={`w-10 h-10 rounded-xl border flex items-center justify-center transition-all active:scale-95 ${dark ? "bg-zinc-800 border-zinc-700 text-amber-400 hover:bg-zinc-700" : "bg-slate-100 border-slate-200 text-slate-500 hover:bg-slate-200"}`}
+                >
                   {dark ? <Sun size={17} /> : <Moon size={17} />}
                 </button>
 
@@ -275,7 +275,6 @@ export default function BaseLayout({ navSections = [], roleLabel = "User" }) {
             </div>
           </header>
 
-          {/* PAGE CONTENT: Fixed background conflict */}
           <main className="flex-1 overflow-y-auto scroll-smooth bg-transparent">
             <div className="p-6 xl:p-10 max-w-7xl mx-auto min-h-full">
               <Outlet />
@@ -283,6 +282,5 @@ export default function BaseLayout({ navSections = [], roleLabel = "User" }) {
           </main>
         </div>
       </div>
-    </ThemeContext.Provider>
   );
 }

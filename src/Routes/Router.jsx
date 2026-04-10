@@ -30,6 +30,11 @@ import AddInventory from "../Pages/AdminPages/AddInventory/AddInventory";
 import MyProfile from "../Pages/Profile/MyProfile";
 import AllDonors from "../Pages/AdminPages/AllDonors/AllDonors";
 import AllVolunteers from "../Pages/AdminPages/AllVolunteers/AllVolunteers";
+import BloodRequest from "../Pages/AdminPages/UserPages/BloodRequest/BloodRequest";
+import AllRequests from "../Pages/AdminPages/AllRequests/AllRequests";
+import DonationHistory from "../Pages/DonationHistory/DonationHistory";
+import Analytics from "../Pages/AdminPages/Analytics/Analytics";
+import MyRequests from "../Pages/MyRequests/MyRequests";
 
 
 export const router = createBrowserRouter([
@@ -142,6 +147,10 @@ export const router = createBrowserRouter([
 
       },
       {
+        path:"allrequests",
+        element: <AllRequests></AllRequests>
+      },
+      {
         path: "profile",
         element: <MyProfile></MyProfile>
       },
@@ -152,6 +161,22 @@ export const router = createBrowserRouter([
       {
         path:"volunteers",
         element: <AllVolunteers></AllVolunteers>
+      },
+      {
+        path:"request",
+        element: <BloodRequest></BloodRequest>
+      },
+      {
+        path:"history",
+        element: <DonationHistory></DonationHistory>
+      },
+      {
+        path:"analytics",
+        element: <Analytics></Analytics>
+      },
+      {
+        path:"my-requests",
+        element: <MyRequests></MyRequests>
       }
     ]
   }

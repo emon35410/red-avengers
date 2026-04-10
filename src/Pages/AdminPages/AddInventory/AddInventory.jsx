@@ -4,7 +4,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Droplets, MapPin, Mail, User, Phone, Send, Loader2, Database } from 'lucide-react';
 import toast from 'react-hot-toast';
 import useAxiosPublic from '../../../Hooks/useAxiosPublic';
-import { useTheme } from '../../../Layouts/BaseLayout';
+import { useTheme } from '../../../Context/ThemeContext ';
+
 
 const BLOOD_GROUPS = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
 
@@ -161,7 +162,7 @@ const AddInventory = () => {
                         <button
                             type="submit"
                             disabled={mutation.isPending}
-                            className={`w-lg py-3 rounded-4xl font-black  text-2xl
+                            className={`px-4 py-3 rounded-4xl font-black  text-sm
                                      transition-all duration-500 active:scale-[0.97] flex items-center justify-center gap-4
                                      ${dark 
                                         ? 'bg-rose-600 text-white hover:bg-rose-500 shadow-2xl shadow-rose-900/40' 
@@ -172,7 +173,7 @@ const AddInventory = () => {
                                 <Loader2 className="w-5 h-5 animate-spin" />
                             ) : (
                                 <>
-                                    <Send className="w-6 h-6" />
+                                    <Send className="w-4 h-4" />
                                     <span>Entry Register</span>
                                 </>
                             )}

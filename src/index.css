@@ -1,38 +1,47 @@
 @import "tailwindcss";
 
-
+/* ============================= */
+/* THEME CONFIGURATION (Single Font) */
+/* ============================= */
 @theme {
   /* Colors */
   --color-slate-950: #020617;
   --color-rose-600: #e11d48;
 
-  /* Fonts */
-  --font-heading: "Montserrat", sans-serif;
-  --font-sans: "Inter", sans-serif;
+  /* Custom Font - Only Inter */
+  --font-sans: "Inter", "sans-serif";
 }
 
+/* Custom Variant for Dark Mode */
 @custom-variant dark (&:where(.dark, .dark *));
 
-
+/* ============================= */
+/* BASE STYLES */
+/* ============================= */
 @layer base {
   html {
-    font-family: var(--font-sans); /* Default = Inter */
-    transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+    /* Pura App er ektai font: Inter */
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.3s ease;
   }
 
   body {
     @apply bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100;
   }
 
-  /* Headings use Montserrat */
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-family: var(--font-heading);
-    font-weight: 700;
+  /* Headings-o ekhon default Inter use korbe, shudhu weight ta bold hobe */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold tracking-tight;
+  }
+
+  /* Eye Comfort Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-slate-300 dark:bg-zinc-800 rounded-full hover:bg-rose-500/50;
   }
 }
 
@@ -40,7 +49,8 @@
 /* CUSTOM UTILITIES */
 /* ============================= */
 @layer components {
-  .font-heading {
-    font-family: var(--font-heading);
+  /* Extra utility jodi manually font force kora lage */
+  .font-main {
+    font-family: var(--font-sans);
   }
 }
