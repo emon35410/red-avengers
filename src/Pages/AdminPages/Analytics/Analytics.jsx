@@ -65,7 +65,7 @@ export default function Analytics() {
 
   // --- Data Processing ---
 
-  // ১. ডোনারদের ব্লাড গ্রুপ ডিস্ট্রিবিউশন
+  //donars blood group distribution (Pie Chart) - Verified Donors Only
   const donorBloodGroupData = useMemo(() => {
     const counts = {};
     usersData?.users?.forEach((u) => {
@@ -79,7 +79,7 @@ export default function Analytics() {
     }));
   }, [usersData]);
 
-  // ২. কমপ্লিটেড রিকোয়েস্ট প্রায়োরিটি
+  // completed requests by priority (Bar Chart) - Completed Requests Only
   const completedPriorityData = useMemo(() => {
     const counts = {};
     requestsData?.forEach((r) => {
@@ -93,7 +93,7 @@ export default function Analytics() {
     }));
   }, [requestsData]);
 
-  // ৩. ফান্ডিং ট্রেন্ড (Area Chart)
+  // funding trend over time (Area Chart) - Paid Payments Only
   const fundTrendData = useMemo(() => {
     const dailySums = {};
     payments
@@ -111,7 +111,7 @@ export default function Analytics() {
     }));
   }, [payments]);
 
-  // ৪. ব্লাড ইনভেন্টরি ডাটা
+  // blood inventory levels (Bar Chart) - Current Inventory Data
   const inventoryChartData = useMemo(() => {
     return (
       inventoryData?.map((item) => ({
@@ -121,7 +121,7 @@ export default function Analytics() {
     );
   }, [inventoryData]);
 
-  // ৫. স্ট্যাটস ক্যালকুলেশন
+  // status cards data (Total Users, Active Donors, Lives Saved, Total Fund)
   const stats = useMemo(() => {
     const totalUsers = usersData?.total || 0;
     const activeDonors =
