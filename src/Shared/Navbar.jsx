@@ -11,14 +11,12 @@ const Navbar = () => {
   const profileRef = useRef(null);
   
   // --- Central Theme Context ---
-  // Tor Navbar ekhon direct central state use korbe
+
   const { dark, toggleTheme } = useTheme(); 
   const { user, logOut } = useAuth();
 
   const defaultAvatar = "https://ui-avatars.com/api/?name=Avenger&background=e11d48&color=fff";
 
-  // Note: localStorage ar root class manipulation ekhon central ThemeProvider-e thaka bhalo.
-  // Kintu tui ekhane ThemeProvider use korle tor local state check korar dorkar nai.
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -93,10 +91,9 @@ const Navbar = () => {
 
           {/* --- Theme Toggle (Fixed Logic) --- */}
           <button
-            onClick={toggleTheme} // Direct Context er toggle call korbe
+            onClick={toggleTheme} // Direct Context togle Theme
             className="p-2.5 rounded-2xl bg-slate-100 dark:bg-[#0c0c14] text-slate-600 dark:text-rose-500 border border-slate-200 dark:border-zinc-800/50 transition-all hover:ring-2 hover:ring-rose-500/30"
           >
-            {/* dark variable use hobe ekhon */}
             {dark ? <Sun size={18} className="text-amber-400" /> : <Moon size={18} />}
           </button>
 

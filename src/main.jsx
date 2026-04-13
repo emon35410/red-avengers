@@ -14,7 +14,7 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <ThemeProvider> {/* 👈 ThemeProvider eikhane wrap kora holo */}
+        <ThemeProvider> {/* 👈 ThemeProvider wraped here */}
           <Toaster
             position="top-center"
             toastOptions={{
