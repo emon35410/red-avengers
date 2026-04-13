@@ -26,9 +26,7 @@ const PaymentSuccess = () => {
                     <Link to="/" className="block w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-3 rounded-xl transition-all">
                         Back to Home
                     </Link>
-                    <Link to="/dashboard/my-donations" className="block w-full text-slate-500 hover:text-rose-600 font-medium py-2 transition-all">
-                        View Donation History
-                    </Link>
+                   
                 </div>
             </div>
         </div>

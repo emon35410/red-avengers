@@ -4,6 +4,7 @@ import {
   AlertCircle,
   Droplet,
   HeartPulse,
+  LucideAlertCircle,
 } from "lucide-react";
 import BaseLayout from "../../../Layouts/BaseLayout";
 
@@ -21,6 +22,7 @@ const VOLUNTEER_NAV = [
         icon: Droplet,
         label: "Donation History"
       },
+      { to: "/dashboard/allrequests", icon: LucideAlertCircle, label: "All Requests" },
       { to: "/dashboard/my-requests", icon: HeartPulse, label: "My Requests" },
       { to: "/dashboard/inventory", icon: ClipboardList, label: "Blood Inventory" },
       { to: "/dashboard/profile", icon: User, label: "My Profile" },

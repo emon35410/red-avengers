@@ -89,7 +89,7 @@ const Camps = () => {
             
             if (campRes.data.success) {
                 // ২. ইউজারের lastRegistrationDate আপডেট করা (ইমেইল দিয়ে)
-                await axiosPublic.patch(`/users/update-registration/${user.email}`, { 
+                await axiosPublic.patch(`/users/update-by-email/${user.email}`, { 
                     lastRegistrationDate: registrationDate 
                 });
 
