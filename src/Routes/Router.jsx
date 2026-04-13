@@ -35,6 +35,9 @@ import AllRequests from "../Pages/AdminPages/AllRequests/AllRequests";
 import DonationHistory from "../Pages/DonationHistory/DonationHistory";
 import Analytics from "../Pages/AdminPages/Analytics/Analytics";
 import MyRequests from "../Pages/MyRequests/MyRequests";
+import AdminRoute from "./AdminRoute";
+import AdminVolunteerRoute from "./AdminVolunteerRoute";
+import VolunteerRoute from "./VolunteerRoute";
 
 
 export const router = createBrowserRouter([
@@ -135,20 +138,20 @@ export const router = createBrowserRouter([
       },
       {
         path: "users",
-        element: <UserManagement></UserManagement>
+        element: <AdminRoute><UserManagement></UserManagement></AdminRoute>
       },
       {
         path: "addCamp",
-        element: <AddCamp></AddCamp>
+        element: <AdminRoute><AddCamp></AddCamp></AdminRoute>
       },
       {
         path: "inventory",
-        element: <AddInventory></AddInventory>
+        element: <VolunteerRoute><AddInventory></AddInventory></VolunteerRoute>
 
       },
       {
         path:"allrequests",
-        element: <AllRequests></AllRequests>
+        element: <AdminVolunteerRoute><AllRequests></AllRequests></AdminVolunteerRoute>
       },
       {
         path: "profile",
@@ -156,11 +159,11 @@ export const router = createBrowserRouter([
       },
       {
         path:"donors",
-        element: <AllDonors></AllDonors>
+        element: <AdminVolunteerRoute><AllDonors></AllDonors></AdminVolunteerRoute>
       },
       {
         path:"volunteers",
-        element: <AllVolunteers></AllVolunteers>
+        element: <AdminRoute><AllVolunteers></AllVolunteers></AdminRoute>
       },
       {
         path:"request",
@@ -172,7 +175,7 @@ export const router = createBrowserRouter([
       },
       {
         path:"analytics",
-        element: <Analytics></Analytics>
+        element: <AdminRoute><Analytics></Analytics></AdminRoute>
       },
       {
         path:"my-requests",

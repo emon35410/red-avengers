@@ -225,12 +225,12 @@ const About = () => {
                             Your blood can save up to three lives. Become part of the league today.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4">
-                            <button className="group flex items-center justify-center gap-3 px-10 py-4 bg-rose-600 hover:bg-rose-500 text-white font-bold uppercase tracking-widest text-sm rounded-full transition-all hover:shadow-[0_0_50px_rgba(225,29,72,0.4)]">
+                            <Link to="/become-donor" className="group flex items-center justify-center gap-3 px-10 py-4 bg-rose-600 hover:bg-rose-500 text-white font-bold uppercase tracking-widest text-sm rounded-full transition-all hover:shadow-[0_0_50px_rgba(225,29,72,0.4)]">
                                 Join the Team <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                            </button>
-                            <button className="flex items-center justify-center px-10 py-4 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold uppercase tracking-widest text-sm rounded-full transition-all">
+                            </Link>
+                            <Link to="/dashboard/request" className="flex items-center justify-center px-10 py-4 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold uppercase tracking-widest text-sm rounded-full transition-all">
                                 Make a Donation
-                            </button>
+                            </Link>
                         </div>
                     </div>
                 </div>
