@@ -1,10 +1,10 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { 
   Mail, MapPin, Shield, Edit3, Camera, 
-  Activity, Settings, Heart, User, Phone, Droplet, X, Save
+  Activity, Heart, User, Phone, Droplet, X, Save
 } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
-import { useForm } from 'react-hook-form'; // React Hook Form যুক্ত করা হয়েছে
+import { useForm } from 'react-hook-form'; 
 import useAuth from '../../Hooks/useAuth';
 import { useTheme } from '../../Context/ThemeContext ';
 import useRole from '../../Hooks/useRole';
@@ -20,10 +20,10 @@ const MyProfile = () => {
     const fileInputRef = useRef(null);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-    // ১. React Hook Form Initialization
+    // react-hook-form initialization
     const { register, handleSubmit, reset, setValue } = useForm();
 
-    // ২. ডাটাবেস থেকে তথ্য আনা
+    // data fetching with react-query
     const { data: userData, isLoading, refetch } = useQuery({
         queryKey: ['user-profile', user?.email],
         enabled: !!user?.email,
@@ -33,7 +33,7 @@ const MyProfile = () => {
         }
     });
 
-    // ৩. ইউজারের বর্তমান ডাটা ফর্মে সেট করা
+    // useEffect to populate form when userData is fetched
     useEffect(() => {
         if (userData) {
             reset({
@@ -46,7 +46,7 @@ const MyProfile = () => {
         }
     }, [userData, reset]);
 
-    // ৪. ফটো আপডেট
+    // photo update handler
     const handlePhotoUpdate = async (e) => {
         const file = e.target.files[0];
         if (!file) return;
@@ -67,7 +67,7 @@ const MyProfile = () => {
         }
     };
 
-    // ৫. প্রোফাইল আপডেট (React Hook Form onSubmit)
+    // profile update handler
     const onSubmit = async (data) => {
         const toastId = toast.loading('Saving to database...');
         try {
@@ -117,7 +117,7 @@ const MyProfile = () => {
                             <RoleIcon size={12} />
                             <span className="text-[10px] font-black uppercase tracking-widest">{cfg.label}</span>
                         </div>
-                        <h1 className="text-5xl font-black italic tracking-tighter">{userData?.name || user?.displayName}</h1>
+                        <h1 className="text-4xl font-black  tracking-tighter">{userData?.name || user?.displayName}</h1>
                         <p className="text-[10px] font-bold opacity-40 uppercase tracking-[0.4em]">UID: {userData?._id?.slice(-8)}</p>
                     </div>
 
