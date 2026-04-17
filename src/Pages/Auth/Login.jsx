@@ -6,12 +6,11 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import toast from 'react-hot-toast';
 import useAuth from '../../Hooks/useAuth';
+import SocialLogin from './SocialLogin';
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const { signInUser, setLoading } = useAuth();
-
-    // Navigation helpers
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
@@ -19,6 +18,12 @@ const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     useEffect(() => {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
         AOS.init({ duration: 1000, once: true });
     }, []);
 
@@ -26,103 +31,96 @@ const Login = () => {
         try {
             setLoading(true);
             await signInUser(data.email, data.password);
-
             toast.success('Welcome Back, Hero!', {
-                style: { background: '#1e293b', color: '#fff' }
+                style: { background: '#1e293b', color: '#fff', borderRadius: '15px' }
             });
-
-            
-            setTimeout(() => {
-                navigate(from, { replace: true });
-            }, 100);
-
+            setTimeout(() => navigate(from, { replace: true }), 100);
         } catch (error) {
-            console.error('Login Error:', error);
-            toast.error(error.message || 'Login failed. Please try again.', {
-                style: { background: '#1e293b', color: '#fff' }
-            });
+            toast.error(error.message || 'Login failed.');
         } finally {
             setLoading(false);
         }
     };
 
     return (
-        <div className="min-h-screen bg-white dark:bg-slate-950 flex items-center justify-center p-2 py-5 transition-colors duration-500 overflow-hidden relative">
-
-            {/* Ambient Glows (Eye Comfort) */}
-            <div className="absolute top-0 left-0 w-125 h-125 bg-rose-600/5 rounded-full blur-[120px] pointer-events-none"></div>
-            <div className="absolute bottom-0 right-0 w-125 h-125 bg-rose-600/5 rounded-full blur-[120px] pointer-events-none"></div>
+        <div className="min-h-screen bg-slate-50 dark:bg-[#080c14] flex items-center justify-center p-4 py-16 transition-colors duration-700 relative overflow-hidden font-sans">
+            
+            {/* Background Glows */}
+            <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
+                <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-rose-500/5 rounded-full blur-[120px]"></div>
+                <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-blue-500/5 rounded-full blur-[120px]"></div>
+            </div>
 
             <div className="w-full max-w-lg relative z-10">
                 <div
-                    data-aos="zoom-in"
-                    className="bg-white/70 dark:bg-slate-900/40 backdrop-blur-2xl rounded-[3rem] shadow-2xl shadow-rose-600/5 border border-slate-200 dark:border-white/5 p-8 md:p-12"
+                    data-aos="fade-up"
+                    className="bg-white/70 dark:bg-slate-900/40 backdrop-blur-3xl rounded-[3.5rem] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)] border border-white/20 dark:border-white/5 p-8 md:p-14"
                 >
-                    {/* Header Section */}
+                    {/* Brand Header */}
                     <div className="text-center mb-10">
-                        <div className="inline-flex items-center px-4 py-1.5 bg-rose-100 dark:bg-rose-500/10 rounded-full mb-6">
-                            <Droplet className="w-4 h-4 text-rose-600 mr-2 animate-bounce" />
-                            <span className="text-rose-600 font-black uppercase tracking-[0.2em] text-[10px]">Secure Access</span>
+                        <div className="inline-flex items-center px-4 py-2 bg-rose-50 dark:bg-rose-500/5 rounded-2xl mb-6 border border-rose-100 dark:border-rose-500/10">
+                            <Droplet className="w-4 h-4 text-rose-600 mr-2 fill-rose-600 animate-pulse" />
+                            <span className="text-rose-600 font-black uppercase tracking-[0.25em] text-[9px]">Hero Identity</span>
                         </div>
-                        <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white italic tracking-tighter mb-3 font-heading uppercase">
-                            Hero <span className="text-rose-600">Login</span>
+                        <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white italic tracking-tighter mb-4 uppercase">
+                            Red <span className="text-rose-600 drop-shadow-sm">Avengers</span>
                         </h2>
-                        <p className="text-slate-500 dark:text-slate-400 font-medium">Welcome back! Ready to save some lives?</p>
+                        <p className="text-slate-500 dark:text-slate-400 font-medium text-sm">Sign in to manage your lifesaving missions</p>
                     </div>
 
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-
-                        {/* Email Address */}
+                        {/* Email Input */}
                         <div className="space-y-2">
-                            <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-2">Email Address</label>
+                            <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500 ml-4">Access Email</label>
                             <div className="relative group">
-                                <Mail className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-rose-600 transition-colors" />
+                                <Mail className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-rose-600 transition-all duration-300" />
                                 <input
                                     type="email"
-                                    {...register('email', { required: "Email is required" })}
-                                    className="w-full pl-14 pr-6 py-4 bg-slate-50 dark:bg-slate-950/50 border border-slate-200 dark:border-white/5 rounded-2xl focus:ring-4 focus:ring-rose-500/10 focus:border-rose-500 outline-none transition text-slate-800 dark:text-white font-medium placeholder:text-slate-400 dark:placeholder:text-slate-600"
-                                    placeholder="yourname@hero.com"
+                                    {...register('email', { required: "Identity required" })}
+                                    className="w-full pl-16 pr-6 py-5 bg-slate-100/50 dark:bg-slate-950/40 border-none rounded-[1.8rem] focus:ring-2 focus:ring-rose-500/20 outline-none transition-all text-slate-800 dark:text-white font-semibold placeholder:text-slate-400/70"
+                                    placeholder="hero@nexus.com"
                                 />
                             </div>
-                            {errors.email && <p className="text-rose-500 text-[10px] font-bold ml-3">{errors.email.message}</p>}
                         </div>
 
-                        {/* Password */}
+                        {/* Password Input */}
                         <div className="space-y-2">
-                            <div className="flex justify-between items-center px-2">
-                                <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Password</label>
-                                <button type="button" className="text-[10px] font-bold text-rose-600 hover:underline uppercase tracking-tighter">Forgot Password?</button>
+                            <div className="flex justify-between items-center px-4">
+                                <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500">Security Code</label>
+                                <button type="button" className="text-[9px] font-black text-rose-600/70 hover:text-rose-600 uppercase transition-colors">Recover</button>
                             </div>
                             <div className="relative group">
-                                <Lock className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-rose-600 transition-colors" />
+                                <Lock className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-rose-600 transition-all duration-300" />
                                 <input
                                     type={showPassword ? 'text' : 'password'}
-                                    {...register('password', { required: "Password is required" })}
-                                    className="w-full pl-14 pr-12 py-4 bg-slate-50 dark:bg-slate-950/50 border border-slate-200 dark:border-white/5 rounded-2xl outline-none focus:ring-4 focus:ring-rose-500/10 focus:border-rose-500 transition text-slate-800 dark:text-white font-medium placeholder:text-slate-400 dark:placeholder:text-slate-600"
-                                    placeholder="Enter secret code"
+                                    {...register('password', { required: "Code required" })}
+                                    className="w-full pl-16 pr-14 py-5 bg-slate-100/50 dark:bg-slate-950/40 border-none rounded-[1.8rem] focus:ring-2 focus:ring-rose-500/20 outline-none transition-all text-slate-800 dark:text-white font-semibold placeholder:text-slate-400/70"
+                                    placeholder="••••••••"
                                 />
-                                <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-rose-600 transition-colors">
+                                <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-6 top-1/2 -translate-y-1/2 text-slate-400 hover:text-rose-600 transition-colors">
                                     {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                                 </button>
                             </div>
-                            {errors.password && <p className="text-rose-500 text-[10px] font-bold ml-3">{errors.password.message}</p>}
                         </div>
 
-                        {/* Login Button */}
+                        {/* Submit Button */}
                         <button
                             type="submit"
-                            className="w-full bg-rose-600 hover:bg-rose-700 text-white py-4 rounded-4xl font-heading font-black italic tracking-[0.15em] text-lg shadow-2xl shadow-rose-600/20 active:scale-[0.97] transition-all duration-500 mt-4 uppercase"
+                            className="w-full bg-rose-600 hover:bg-rose-700 text-white py-5 rounded-4xl font-black italic tracking-widest text-lg shadow-xl shadow-rose-600/20 hover:shadow-rose-600/40 active:scale-[0.96] transition-all duration-500 uppercase"
                         >
-                            LOgIn
+                            Log In Here
                         </button>
                     </form>
 
-                    {/* Footer Link */}
+                    {/* Social Login Integrated inside card */}
+                    <SocialLogin />
+
+                    {/* Signup Footer */}
                     <div className="mt-10 text-center">
-                        <p className="text-slate-500 dark:text-slate-400 font-medium text-sm">
-                            New to the Avengers?{' '}
-                            <Link to="/signup" className="text-rose-600 hover:underline font-black italic ml-1">
-                                CREATE ACCOUNT
+                        <p className="text-slate-400 dark:text-slate-500 font-bold text-[11px] uppercase tracking-tighter">
+                            Don't have an account? 
+                            <Link to="/signup" className="text-rose-600 hover:text-rose-500 ml-2 font-black italic tracking-widest">
+                                Sign Up Now
                             </Link>
                         </p>
                     </div>

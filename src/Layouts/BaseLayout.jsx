@@ -22,7 +22,8 @@ import { io } from "socket.io-client";
 
 // Socket connection
 const socket = io(
-  import.meta.env.VITE_API_URL || "https://red-avengers-server.onrender.com",
+  // import.meta.env.VITE_API_URL || "https://red-avengers-server.onrender.com",
+  import.meta.env.VITE_API_URL || "http://localhost:5000",
   {
     transports: ["websocket"],
   },

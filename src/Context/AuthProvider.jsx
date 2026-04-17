@@ -1,31 +1,47 @@
 import React, { useEffect, useState } from 'react';
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from 'firebase/auth';
+import { 
+    createUserWithEmailAndPassword, 
+    onAuthStateChanged, 
+    signInWithEmailAndPassword, 
+    signOut, 
+    updateProfile,
+    GoogleAuthProvider, // ১. গুগল প্রভাইডার ইমপোর্ট
+    signInWithPopup     // ২. পপআপ সাইন-ইন ইমপোর্ট
+} from 'firebase/auth';
 import { auth } from '../Firebase/Firebase.init';
 import { AuthContext } from './AuthContext';
 import Loading from '../Component/Loading/Loading';
 
-
-
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(true)
-
+    const [loading, setLoading] = useState(true);
+    
+    // ৩. গুগল প্রভাইডার ইন্সট্যান্স তৈরি
+    const googleProvider = new GoogleAuthProvider();
 
     // Sign In with email password
     const registerUser = (email, password) => {
-        setLoading(true)
-        return createUserWithEmailAndPassword(auth, email, password)
-    }
+        setLoading(true);
+        return createUserWithEmailAndPassword(auth, email, password);
+    };
+
     const signInUser = (email, password) => {
-        setLoading(true)
-        return signInWithEmailAndPassword(auth, email, password)
-    }
+        setLoading(true);
+        return signInWithEmailAndPassword(auth, email, password);
+    };
+
+    // ৪. গুগল সাইন-ইন ফাংশন
+    const googleSignIn = () => {
+        setLoading(true);
+        return signInWithPopup(auth, googleProvider);
+    };
 
     // Log Out 
     const logOut = () => {
-        setLoading(true)
-        return signOut(auth)
-    }
+        setLoading(true);
+        return signOut(auth);
+    };
+
     // update Profile
     const updateUserProfile = (profileInfo) => {
         if (auth.currentUser) {
@@ -37,7 +53,6 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
             if (currentUser) {
-                // Get Firebase ID token
                 const token = await currentUser.getIdToken(true); 
                 setUser({ ...currentUser, accessToken: token });
             } else {
@@ -56,13 +71,15 @@ const AuthProvider = ({ children }) => {
         setLoading,
         registerUser,
         signInUser,
+        googleSignIn, // ৫. কন্টেক্সট এ গুগল সাইন-ইন এক্সপোর্ট করা
         logOut,
         updateUserProfile
-    }
-    if (loading) {
+    };
 
+    if (loading) {
         return <Loading></Loading>;
     }
+
     return (
         <AuthContext.Provider value={authInfo}>
             {children}
