@@ -5,8 +5,8 @@ import {
     signInWithEmailAndPassword, 
     signOut, 
     updateProfile,
-    GoogleAuthProvider, // ১. গুগল প্রভাইডার ইমপোর্ট
-    signInWithPopup     // ২. পপআপ সাইন-ইন ইমপোর্ট
+    GoogleAuthProvider,
+    signInWithPopup 
 } from 'firebase/auth';
 import { auth } from '../Firebase/Firebase.init';
 import { AuthContext } from './AuthContext';
@@ -15,11 +15,8 @@ import Loading from '../Component/Loading/Loading';
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
-    
-    // ৩. গুগল প্রভাইডার ইন্সট্যান্স তৈরি
     const googleProvider = new GoogleAuthProvider();
 
-    // Sign In with email password
     const registerUser = (email, password) => {
         setLoading(true);
         return createUserWithEmailAndPassword(auth, email, password);
@@ -30,19 +27,17 @@ const AuthProvider = ({ children }) => {
         return signInWithEmailAndPassword(auth, email, password);
     };
 
-    // ৪. গুগল সাইন-ইন ফাংশন
     const googleSignIn = () => {
         setLoading(true);
         return signInWithPopup(auth, googleProvider);
     };
 
-    // Log Out 
-    const logOut = () => {
+    const logOut = async () => {
         setLoading(true);
+        localStorage.removeItem('access-token'); // লগআউট করলে টোকেন ক্লিয়ার
         return signOut(auth);
     };
 
-    // update Profile
     const updateUserProfile = (profileInfo) => {
         if (auth.currentUser) {
             return updateProfile(auth.currentUser, profileInfo);
@@ -53,10 +48,13 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
             if (currentUser) {
+                // লেটেস্ট টোকেন নিয়ে localStorage-এ সেভ করা
                 const token = await currentUser.getIdToken(true); 
-                setUser({ ...currentUser, accessToken: token });
+                localStorage.setItem('access-token', token);
+                setUser(currentUser);
             } else {
                 setUser(null);
+                localStorage.removeItem('access-token');
             }
             setLoading(false);
         });
@@ -71,14 +69,12 @@ const AuthProvider = ({ children }) => {
         setLoading,
         registerUser,
         signInUser,
-        googleSignIn, // ৫. কন্টেক্সট এ গুগল সাইন-ইন এক্সপোর্ট করা
+        googleSignIn,
         logOut,
         updateUserProfile
     };
 
-    if (loading) {
-        return <Loading></Loading>;
-    }
+    if (loading) return <Loading />;
 
     return (
         <AuthContext.Provider value={authInfo}>
