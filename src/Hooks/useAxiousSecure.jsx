@@ -2,46 +2,57 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import useAuth from './useAuth';
 import { useNavigate } from 'react-router';
+import { toast } from 'react-hot-toast';
 
 const axiosSecure = axios.create({
-    // baseURL: 'http://localhost:5000'
-    baseURL: 'https://red-avengers-server.onrender.com'
+    baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000'
 });
 
+let isInterceptorAttached = false;
+
 const useAxiosSecure = () => {
-    const { user, logOut } = useAuth();
+    const { logOut } = useAuth();
     const navigate = useNavigate();
 
     useEffect(() => {
-        // request interceptor: will attach token to every request
-        const reqInterceptor = axiosSecure.interceptors.request.use((config) => {
-            const token = localStorage.getItem('access-token'); // অথবা user?.accessToken
+        if (isInterceptorAttached) return;
+
+        // Request Interceptor
+        axiosSecure.interceptors.request.use((config) => {
+            const token = localStorage.getItem('access-token');
             if (token) {
                 config.headers.Authorization = `Bearer ${token}`;
             }
             return config;
-        }, (error) => {
-            return Promise.reject(error);
-        });
+        }, (error) => Promise.reject(error));
 
-        // response interceptor: will handle unauthorized responses
-        const resInterceptor = axiosSecure.interceptors.response.use((response) => {
-            return response;
-        }, async (error) => {
-            const statusCode = error?.response?.status;
-            if (statusCode === 401 || statusCode === 403) {
-                await logOut();
-                navigate("/login");
+        // Response Interceptor
+        axiosSecure.interceptors.response.use(
+            (response) => response,
+            async (error) => {
+                const statusCode = error?.response?.status;
+
+                if (statusCode === 401) {
+                    await logOut();
+                    navigate("/login");
+                    toast.error("Session expired!", { id: 'auth-error' }); 
+                } 
+                else if (statusCode === 403) {
+                    const message = error.response?.data?.message || "Action Denied: Read-only mode!";
+                    
+                    toast.error(message, {
+                        id: 'demo-restriction', // Unique ID ensures only one toast shows
+                        icon: '🚫',
+                        style: { background: '#1f2937', color: '#fff' }
+                    });
+                }
+                return Promise.reject(error);
             }
-            return Promise.reject(error);
-        });
+        );
 
-        // interceptors cleanup: to prevent memory leaks
-        return () => {
-            axiosSecure.interceptors.request.eject(reqInterceptor);
-            axiosSecure.interceptors.response.eject(resInterceptor);
-        };
-    }, [user, logOut, navigate]);
+        isInterceptorAttached = true; 
+
+    }, [logOut, navigate]);
 
     return axiosSecure;
 };

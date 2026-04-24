@@ -7,6 +7,7 @@ import 'aos/dist/aos.css';
 import toast from 'react-hot-toast';
 import useAuth from '../../Hooks/useAuth';
 import SocialLogin from './SocialLogin';
+import DemoLogin from './DemoLogin';
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -125,6 +126,7 @@ const Login = () => {
                         </p>
                     </div>
                 </div>
+                <DemoLogin />
             </div>
         </div>
     );
