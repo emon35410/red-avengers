@@ -13,7 +13,7 @@ const Dashboard = () => {
   // Console log-ta useEffect-er bhetore daw jate shudhu role change holei print hoy
   useEffect(() => {
     if (role) {
-      console.log("Current User Role:", role);
+      // console.log("Current User Role:", role);
     }
   }, [role]);
 
