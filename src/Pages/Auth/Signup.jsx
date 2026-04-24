@@ -182,7 +182,7 @@ const Signup = () => {
                                     <input
                                         type="file"
                                         {...register('image', { required: 'Required' })}
-                                        className="w-full pl-14 pr-4 py-[14px] bg-white dark:bg-slate-950/50 border border-dashed border-slate-300 dark:border-white/20 rounded-2xl file:hidden cursor-pointer text-slate-500 text-[11px] focus:border-rose-500 transition-all"
+                                        className="w-full pl-14 pr-4 py-3.5 bg-white dark:bg-slate-950/50 border border-dashed border-slate-300 dark:border-white/20 rounded-2xl file:hidden cursor-pointer text-slate-500 text-[11px] focus:border-rose-500 transition-all"
                                     />
                                 </div>
                                 {errors.image && <p className="text-rose-500 text-[10px] font-bold ml-2">Required</p>}
@@ -224,7 +224,7 @@ const Signup = () => {
 
                         <button
                             type="submit"
-                            className="w-full bg-rose-600 hover:bg-rose-700 text-white py-4 rounded-[2rem] font-black tracking-[0.15em] text-lg shadow-xl shadow-rose-600/20 active:scale-[0.98] transition-all duration-300 mt-4 uppercase"
+                            className="w-full bg-rose-600 hover:bg-rose-700 text-white py-4 rounded-4xl font-black tracking-[0.15em] text-lg shadow-xl shadow-rose-600/20 active:scale-[0.98] transition-all duration-300 mt-4 uppercase"
                         >
                             Sign Up Now
                         </button>

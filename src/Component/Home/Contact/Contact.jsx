@@ -13,7 +13,7 @@ const Contact = () => {
     }, []);
 
     const onSubmit = (data) => {
-        console.log('Form data:', data);
+        // console.log('Form data:', data);
         
         Swal.fire({
             icon: 'success',
